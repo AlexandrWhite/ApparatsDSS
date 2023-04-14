@@ -14,11 +14,6 @@
         <local:FilterVM/>
     </Window.DataContext>
 
-    <Window.Resources>
-       
-    </Window.Resources>
-
-
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -48,7 +43,7 @@
                     Style="{StaticResource ButtonCustom}" Click="Button_Click"/>
                     
                 <Expander 
-                    hc:BackgroundSwitchElement.MouseHoverBackground="Azure"
+                   
                     Style="{StaticResource InputElementBaseStyle}"
                     Header="Области применения"
                     Margin="0,2,0,0">
@@ -62,7 +57,9 @@
                                 Style="{StaticResource SearchBarExtend}"
                                 hc:InfoElement.Placeholder="Поиск по областям применения"
                                 IsRealTime="True"/>
-
+                            
+                            
+                            
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -70,12 +67,14 @@
                                 </Grid.ColumnDefinitions>
                             <Button Content="Выделить всё" Margin="2" 
                                     Height="30"
+                                    Command="{Binding SelectAllCommand}"
                                     Background="{StaticResource TextIconBrush}"
                                     BorderBrush="{StaticResource BorderBrush}"
                                     BorderThickness="1"
                                     Style="{StaticResource ButtonCustom}"/>
                             <Button Content="Снять выделения" Margin="2" 
                                     Grid.Column="1"
+                                    Command="{Binding DeselectAllCommand}"
                                     Height="30"
                                     Background="{StaticResource TextIconBrush}"
                                     BorderBrush="{StaticResource BorderBrush}"
@@ -91,16 +90,17 @@
                             Margin="4">
 
                             <ItemsControl Name="Items" 
-                                          ItemsSource="{Binding SearchResult, 
-                                          UpdateSourceTrigger=PropertyChanged, 
-                                          Mode=TwoWay}" >
+                                          ItemsSource="{Binding SearchResult,
+                                          Mode=TwoWay,
+                                          UpdateSourceTrigger=PropertyChanged 
+                                          }" >
 
                                
                                 
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <CheckBox HorizontalAlignment="Left"
-                                                  IsChecked="{Binding Value, Mode=TwoWay}">
+                                                  IsChecked="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                             <TextBlock 
                                             Margin="2"
                                             Text="{Binding Key}"

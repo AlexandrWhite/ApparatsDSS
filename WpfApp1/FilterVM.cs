@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -15,13 +16,18 @@ namespace WpfApp1
     class FilterVM:INotifyPropertyChanged
     {
         public RelayCommand<string> SearchCommand { get; }
-
+        public RelayCommand SelectAllCommand { get; }
+        public RelayCommand DeselectAllCommand { get;  }
 
         ObservableCollection<MyPair<string, bool>> search_result = new ObservableCollection<MyPair<string, bool>>();
 
         public FilterVM()
         {            
             SearchCommand = new RelayCommand<string>(Search);
+            SelectAllCommand = new RelayCommand(SelectAll);
+            DeselectAllCommand = new RelayCommand(DeselectAll);
+            
+
             foreach(var element in using_fields_data)
             {
                 search_result.Add(element);
@@ -29,12 +35,34 @@ namespace WpfApp1
             
         }
 
-       
 
-       
+        private void SelectAll()
+        {        
+            foreach (var element in SearchResult)
+            {
+                element.Value = true;
+                Console.WriteLine(element.Value);
+            }               
+            OnPropertyChanged(nameof(SearchResult));
+        }
+
+        private void DeselectAll()
+        {
+            foreach (var element in SearchResult)
+            {
+                element.Value = false;
+                Console.WriteLine(element.Value);
+            }
+            OnPropertyChanged(nameof(SearchResult));
+        }
+
+
+
+
 
         private void Search(string query)
         {
+           
             query = query.ToLower();
             SearchResult.Clear();
 
@@ -46,8 +74,12 @@ namespace WpfApp1
                 foreach (var element in find_list)
                 {
                     SearchResult.Add(element);
+                    Console.WriteLine(element.Value);
                 }
                 
+
+
+
                 OnPropertyChanged(nameof(SearchResult));
             }
         }
@@ -61,6 +93,9 @@ namespace WpfApp1
             new MyPair<string, bool>( "Исследования малых органов", false),
             new MyPair<string, bool>( "Исследования молочной железы", false),
             new MyPair<string, bool>( "Исследования мочевого пузыря", false),
+
+            
+
 
         };
 
@@ -183,15 +218,33 @@ namespace WpfApp1
     }
 
 
-    public class MyPair<T1, T2>
+    public class MyPair<T1, T2>:INotifyPropertyChanged
     {
-        public T1 Key { get; set; }
-        public T2 Value { get; set; }
+        T1 _key;
+        T2 _val;
+        
+        public T1 Key
+        {
+            get { return _key; }
+            set { _key = value; OnPropertyChanged(nameof(Key)); }
+        }
+
+        public T2 Value 
+        {
+            get { return _val; }
+            set { _val = value; OnPropertyChanged(nameof(Value)); }
+        }
 
         public MyPair(T1 key, T2 value)
         {
             Key = key;
             Value = value;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
