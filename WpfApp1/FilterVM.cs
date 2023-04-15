@@ -19,6 +19,11 @@ namespace WpfApp1
         public RelayCommand SelectAllCommand { get; }
         public RelayCommand DeselectAllCommand { get;  }
 
+
+
+        List<string> selected_fields = new List<string>();
+
+
         ObservableCollection<MyPair<string, bool>> search_result = new ObservableCollection<MyPair<string, bool>>();
 
         public FilterVM()
@@ -26,34 +31,48 @@ namespace WpfApp1
             SearchCommand = new RelayCommand<string>(Search);
             SelectAllCommand = new RelayCommand(SelectAll);
             DeselectAllCommand = new RelayCommand(DeselectAll);
-            
+            SearchResult.CollectionChanged += SearchResult_CollectionChanged;
 
-            foreach(var element in using_fields_data)
+
+            foreach (var element in using_fields_data)
             {
                 search_result.Add(element);
+                element.PropertyChanged += FieldsElementPropertyChanged;
             }
+            
             
         }
 
+        private void FieldsElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            MyPair<string, bool> element = sender as MyPair<string, bool>;
+            
+            if (element.Value && selected_fields.Find(s => s == element.Key) is null)
+                selected_fields.Add(element.Key);
+            else if (element.Value == false)
+                selected_fields.Remove(element.Key);
+            OnPropertyChanged(nameof(Res));
+        }
+
+        private void SearchResult_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //Console.WriteLine(sender);
+        }
 
         private void SelectAll()
         {        
             foreach (var element in SearchResult)
-            {
-                element.Value = true;
-                Console.WriteLine(element.Value);
-            }               
+                element.Value = true;         
             OnPropertyChanged(nameof(SearchResult));
+            OnPropertyChanged(nameof(Res));
         }
 
         private void DeselectAll()
         {
-            foreach (var element in SearchResult)
-            {
-                element.Value = false;
-                Console.WriteLine(element.Value);
-            }
+            foreach (var element in SearchResult)            
+                element.Value = false;            
             OnPropertyChanged(nameof(SearchResult));
+            OnPropertyChanged(nameof(Res));
         }
 
 
@@ -61,12 +80,10 @@ namespace WpfApp1
 
 
         private void Search(string query)
-        {
-           
+        {           
             query = query.ToLower();
             SearchResult.Clear();
 
-            //Console.WriteLine(using_fields_data.Count);
             var find_list = using_fields_data.Where(s => s.Key.ToLower().Contains(query));
 
 
@@ -74,12 +91,7 @@ namespace WpfApp1
                 foreach (var element in find_list)
                 {
                     SearchResult.Add(element);
-                    Console.WriteLine(element.Value);
-                }
-                
-
-
-
+                }             
                 OnPropertyChanged(nameof(SearchResult));
             }
         }
@@ -93,10 +105,12 @@ namespace WpfApp1
             new MyPair<string, bool>( "Исследования малых органов", false),
             new MyPair<string, bool>( "Исследования молочной железы", false),
             new MyPair<string, bool>( "Исследования мочевого пузыря", false),
-
-            
-
-
+            new MyPair<string, bool>( "Исследование опорно-двигательной системы", false),
+            new MyPair<string, bool>( "Исследование органов брюшной полости", false),
+            new MyPair<string, bool>( "Исследование поверхностных органов", false),
+            new MyPair<string, bool>( "Исследование поверхностных структур", false),
+            new MyPair<string, bool>( "Исследование предстательной железы", false),
+            new MyPair<string, bool>( "Исследование сонной артерии", false),
         };
 
         public ObservableCollection<MyPair<string, bool>> SearchResult
@@ -106,72 +120,12 @@ namespace WpfApp1
             {
                 if (search_result != value)
                 {
-                    search_result = value;
+                    search_result = value;                    
                     OnPropertyChanged(nameof(SearchResult));
                 }
             }
-        }
+        }       
 
-
-
-
-
-
-
-        List<string> names_data = new List<string>(){
-            "Абдоминальные исследования",
-            "Акушерство и гинекология",
-            "Внутриполостные исследования",
-            "Гастроэнтерология",
-            
-            "Исследование малых органов",
-            "Исследование молочной железы",
-            "Исследование мочевого пузыря",
-            "Исследование опорно-двигательной системы",
-            "Исследование органов брюшной полости",
-            "Исследование поверхностных органов",
-            "Исследование поверхностных структур",
-            "Исследование почек",
-            "Исследование предстательной железы",
-            "Исследование сонной артерии",
-
-
-             "Исследование мочевого пузыря",
-            "Исследование опорно-двигательной системы",
-            "Исследование органов брюшной полости",
-            "Исследование поверхностных органов",
-            "Исследование поверхностных структур",
-            "Исследование почек",
-            "Исследование предстательной железы",
-            "Исследование сонной артерии",
-
-            "Исследование мочевого пузыря",
-            "Исследование опорно-двигательной системы",
-            "Исследование органов брюшной полости",
-            "Исследование поверхностных органов",
-            "Исследование поверхностных структур",
-            "Исследование почек",
-            "Исследование предстательной железы",
-            "Исследование сонной артерии",
-            "Исследование мочевого пузыря",
-            "Исследование опорно-двигательной системы",
-            "Исследование органов брюшной полости",
-            "Исследование поверхностных органов",
-            "Исследование поверхностных структур",
-            "Исследование почек",
-            "Исследование предстательной железы",
-            "Исследование сонной артерии",
-            "Исследование мочевого пузыря",
-            "Исследование опорно-двигательной системы",
-            "Исследование органов брюшной полости",
-            "Исследование поверхностных органов",
-            "Исследование поверхностных структур",
-            "Исследование почек",
-            "Исследование предстательной железы",
-            "Исследование сонной артерии"
-        };
-
-        List<string> fields = new List<string>();
 
         List<string> prices = new List<string>()
         {
@@ -192,16 +146,25 @@ namespace WpfApp1
         };
 
       
+        public string Res
+        {
+            get {
+                Console.WriteLine("inResultUPd!!!!");
+                string res = "";
+                res = "Области применения:\n";
+                foreach(string field in selected_fields)
+                {
+                    res += field + "\n";
+                }
+                return res;
+            }
+        }
 
         public List<string> ApparatClasses
         {
             get { return apparatClasses; }
         }
 
-        public List<String> Names
-        {
-            get { return fields; }
-        }
 
         public List<string> Prices
         {

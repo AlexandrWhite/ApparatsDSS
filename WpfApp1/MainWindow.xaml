@@ -43,11 +43,16 @@
                     Style="{StaticResource ButtonCustom}" Click="Button_Click"/>
                     
                 <Expander 
-                   
+                    
                     Style="{StaticResource InputElementBaseStyle}"
-                    Header="Области применения"
+                    
+                    
                     Margin="0,2,0,0">
 
+                    <Expander.Header>
+                        Области применения
+                    </Expander.Header>
+                    
                     <StackPanel>
                         <StackPanel>
                             <hc:SearchBar
@@ -224,7 +229,7 @@
                 <Expander Header="Стоимость"
                           Style="{StaticResource InputElementBaseStyle}"
                           Margin="0,2,0,0">
-                    <hc:ComboBox SelectedIndex="0" ItemsSource="{Binding Prices}" Margin="4"/>
+                    <hc:ComboBox SelectedIndex="0" ItemsSource="{Binding Prices}" Margin="4" Width="260"/>
                 </Expander>
 
 
@@ -245,6 +250,9 @@
             </DataGrid.Columns>
            
         </DataGrid>-->
-        
+
+        <TextBlock Text="{Binding Res, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+
+
     </Grid>
 </Window>
