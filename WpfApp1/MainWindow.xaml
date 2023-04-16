@@ -246,7 +246,7 @@
                 <Expander Header="Стоимость"
                           Style="{StaticResource InputElementBaseStyle}"
                           Margin="0,2,0,0">
-                    <hc:ComboBox SelectedIndex="0" ItemsSource="{Binding Prices}" Margin="4" Width="260"/>
+                    <hc:ComboBox SelectedIndex="{Binding SelectedPriceIndex}" ItemsSource="{Binding Prices}" Margin="4" Width="260"/>
                 </Expander>
 
 

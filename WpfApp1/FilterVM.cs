@@ -23,15 +23,16 @@ namespace WpfApp1
 
         List<string> selected_fields = new List<string>();
 
-
         ObservableCollection<MyPair<string, bool>> search_result = new ObservableCollection<MyPair<string, bool>>();
+
+
 
         public FilterVM()
         {            
             SearchCommand = new RelayCommand<string>(Search);
             SelectAllCommand = new RelayCommand(SelectAll);
             DeselectAllCommand = new RelayCommand(DeselectAll);
-            SearchResult.CollectionChanged += SearchResult_CollectionChanged;
+           
 
 
             foreach (var element in using_fields_data)
@@ -54,10 +55,7 @@ namespace WpfApp1
             OnPropertyChanged(nameof(Res));
         }
 
-        private void SearchResult_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            //Console.WriteLine(sender);
-        }
+       
 
         private void SelectAll()
         {        
@@ -83,7 +81,6 @@ namespace WpfApp1
             get { return monitor_diag; }
             set {
                 monitor_diag = value;
-                //monitor_diag = float.Parse(value); 
                 OnPropertyChanged(nameof(Res)); }
         }
 
@@ -134,8 +131,17 @@ namespace WpfApp1
                     OnPropertyChanged(nameof(SearchResult));
                 }
             }
-        }       
+        }
 
+
+
+        int selected_price_index = 0;
+
+        public int SelectedPriceIndex
+        {
+            get { return selected_price_index; }
+            set { selected_price_index = value; OnPropertyChanged(nameof(Res)); }
+        }
 
         List<string> prices = new List<string>()
         {
@@ -145,6 +151,14 @@ namespace WpfApp1
             "От 2 000 000 рублей до 3 000 000 рублей",
             "От 3 000 000 и выше",
         };
+
+
+        int selected_class_index = 0;
+        public int SelectedClassIndex
+        {
+            get { return selected_class_index; }
+            set { selected_class_index = value; OnPropertyChanged(nameof(Res)); }
+        }
 
         List<string> apparatClasses = new List<string>()
         {
@@ -176,6 +190,11 @@ namespace WpfApp1
                 res += "\n";
                 res += "Диагональ монитора:\n";
                 res += float.Parse(MonitorDiag).ToString() + "\n";
+                res += "\n";
+
+                res += "\n";
+                res += "Цена:\n";
+                res += prices[selected_price_index] + "\n";
 
                 res += "\n";
 
@@ -185,12 +204,7 @@ namespace WpfApp1
             }
         }
 
-        int selected_class_index = 0;
-        public int SelectedClassIndex
-        {
-            get { return selected_class_index; }
-            set { selected_class_index = value; OnPropertyChanged(nameof(Res)); }
-        }
+
 
         public List<string> ApparatClasses
         {
