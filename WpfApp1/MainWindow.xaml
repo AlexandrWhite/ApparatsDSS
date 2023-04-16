@@ -107,10 +107,10 @@
                                         <CheckBox HorizontalAlignment="Left"
                                                   IsChecked="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                             <TextBlock 
-                                            Margin="2"
-                                            Text="{Binding Key}"
-                                            
-                                            TextWrapping="Wrap"/>
+                                                Margin="2"
+                                                Text="{Binding Key}"
+                                                TextWrapping="Wrap"
+                                            />
                                         </CheckBox>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -219,18 +219,30 @@
                 <Expander  Header="Страна изготовитель"
                            Style="{StaticResource InputElementBaseStyle}"
                            Margin="0,2,0,0">
-                    <StackPanel Margin="4">
-                        <CheckBox Content="Германия" Margin="2"/>
-                        <CheckBox Content="Дания" Margin="2"/>
-                        <CheckBox Content="Италия" Margin="2"/>
-                        <CheckBox Content="Китай" Margin="2"/>
-                        <CheckBox Content="Нидерланды" Margin="2"/>
-                        <CheckBox Content="Республика Корея" Margin="2"/>
-                        <CheckBox Content="Россия" Margin="2"/>
-                        <CheckBox Content="США" Margin="2"/>
-                        <CheckBox Content="Франция" Margin="2"/>
-                        <CheckBox Content="Япония" Margin="2"/>
-                    </StackPanel>
+                    <ItemsControl
+                         
+                        ItemsSource="{Binding Countries,
+                        Mode=TwoWay,
+                        UpdateSourceTrigger=PropertyChanged}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox HorizontalAlignment="Left"
+                                                  IsChecked="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBlock 
+                                                Margin="2"
+                                                Text="{Binding Key}"
+                                                TextWrapping="Wrap"
+                                            />
+                                </CheckBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate >
+                                <StackPanel HorizontalAlignment="Left"  Width="250"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                  
                 </Expander>
 
                 <Expander Header="Инструкция на русском"

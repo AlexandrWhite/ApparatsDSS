@@ -40,8 +40,25 @@ namespace WpfApp1
                 search_result.Add(element);
                 element.PropertyChanged += FieldsElementPropertyChanged;
             }
-            
-            
+
+
+            foreach(var element in countries_data)
+            {
+                element.PropertyChanged += CountriesPropertyChanged;
+            }
+
+
+        }
+
+        private void CountriesPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            MyPair<string, bool> element = sender as MyPair<string, bool>;
+
+            if (element.Value && selected_countries.Find(s => s == element.Key) is null)
+                selected_countries.Add(element.Key);
+            else if (element.Value == false)
+                selected_countries.Remove(element.Key);
+            OnPropertyChanged(nameof(Res));
         }
 
         private void FieldsElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -120,6 +137,34 @@ namespace WpfApp1
             new MyPair<string, bool>( "Исследование сонной артерии", false),
         };
 
+        List<string> selected_countries = new List<string>();
+        private ObservableCollection<MyPair<string, bool>> countries_data = new ObservableCollection<MyPair<string, bool>>()
+        {
+            new MyPair<string, bool>( "Германия", false),
+            new MyPair<string, bool>( "Дания", false),
+            new MyPair<string, bool>( "Италия", false),
+            new MyPair<string, bool>( "Китай", false),
+            new MyPair<string, bool>( "Недерланды", false),
+            new MyPair<string, bool>( "Республика Корея", false),
+            new MyPair<string, bool>( "Россия", false),
+            new MyPair<string, bool>( "США", false),
+            new MyPair<string, bool>( "Франция", false),
+            new MyPair<string, bool>( "Япония", false)
+        }; 
+
+        public ObservableCollection<MyPair<string,bool>> Countries
+        {
+            get
+            {
+                return countries_data;
+            }
+            set
+            {
+                countries_data = value;
+            }
+        }
+
+
         public ObservableCollection<MyPair<string, bool>> SearchResult
         {
             get { return search_result; }
@@ -195,8 +240,15 @@ namespace WpfApp1
                 res += "\n";
                 res += "Цена:\n";
                 res += prices[selected_price_index] + "\n";
-
                 res += "\n";
+
+                res += "Страны:\n";
+                foreach (string country in selected_countries)
+                {
+                    res += country + "\n";
+                }
+                res += "\n";
+
 
 
 
