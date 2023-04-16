@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         xmlns:hc="https://handyorg.github.io/handycontrol"
-       
+        xmlns:valid ="clr-namespace:WpfApp1.ValidationRules"
         
         mc:Ignorable="d"
         Title="СППР" Height="450" Width="800">
@@ -132,7 +132,7 @@
                     Header="Класc аппарата" 
                     Margin="0,2,0,0">
                     <Border >
-                        <hc:ComboBox SelectedIndex="0" ItemsSource="{Binding ApparatClasses}" Margin="4"/>
+                        <hc:ComboBox SelectedIndex="{Binding SelectedClassIndex}" ItemsSource="{Binding ApparatClasses}" Margin="4"/>
                     </Border>
                 </Expander>
 
@@ -144,7 +144,8 @@
                     <Border>
                         <hc:ButtonGroup 
                             Margin="4"
-                            Style="{StaticResource ButtonGroupSolid}">
+                            Style="{StaticResource ButtonGroupSolid}"
+                            >
                             <RadioButton  Content="Портативный" IsChecked="True"/>
                             <RadioButton  Content="Стационарный" />
                         </hc:ButtonGroup>
@@ -183,14 +184,30 @@
                 <Expander Header="Диагональ монитора" 
                           Style="{StaticResource InputElementBaseStyle}"
                           Margin="0,2,0,0">
-                    <hc:NumericUpDown
-                        hc:InfoElement.TitleWidth="180"
-                        hc:TitleElement.Title="Диагональ (дюйм)"
-                        hc:InfoElement.TitlePlacement="Left"
-                        Maximum="100" 
-                        Value="30"
-                        Style="{StaticResource NumericUpDownExtend}"
-                        Margin="4"/>
+
+                    <Border Height="50">
+                        <StackPanel>
+                            <TextBox
+                            hc:InfoElement.TitleWidth="160"
+                            hc:TitleElement.Title="Диагональ (дюйм)"
+                            hc:InfoElement.TitlePlacement="Left"
+                            Style="{StaticResource TextBoxExtend}"
+                        
+                        
+                             Width="276">
+                                <TextBox.Text>
+                                    <Binding Path="MonitorDiag" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <valid:FloatInputValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                                
+                                
+                            </TextBox>
+
+                        </StackPanel>
+                    </Border>
                 </Expander>
 
                 <Expander Header="Набор датчиков"

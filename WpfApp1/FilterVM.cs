@@ -76,6 +76,16 @@ namespace WpfApp1
         }
 
 
+        //float monitor_diag;
+        string monitor_diag="0";
+        public string MonitorDiag
+        {
+            get { return monitor_diag; }
+            set {
+                monitor_diag = value;
+                //monitor_diag = float.Parse(value); 
+                OnPropertyChanged(nameof(Res)); }
+        }
 
 
 
@@ -149,15 +159,37 @@ namespace WpfApp1
         public string Res
         {
             get {
-                Console.WriteLine("inResultUPd!!!!");
+                
                 string res = "";
                 res = "Области применения:\n";
                 foreach(string field in selected_fields)
                 {
                     res += field + "\n";
                 }
+
+                res += "\n";
+                res += "Класс препарата:\n";
+                res += apparatClasses[selected_class_index] +"\n";
+
+                res += "\n";
+
+                res += "\n";
+                res += "Диагональ монитора:\n";
+                res += float.Parse(MonitorDiag).ToString() + "\n";
+
+                res += "\n";
+
+
+
                 return res;
             }
+        }
+
+        int selected_class_index = 0;
+        public int SelectedClassIndex
+        {
+            get { return selected_class_index; }
+            set { selected_class_index = value; OnPropertyChanged(nameof(Res)); }
         }
 
         public List<string> ApparatClasses
