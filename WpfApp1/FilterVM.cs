@@ -236,13 +236,17 @@ namespace WpfApp1
             set { construction = value; }
         }
 
-        //bool have_instruction = true
-        //public bool HaveInstruction
-        //{
-        //    get { return value}
-        //}
+        bool have_rus_instruction = true;
+        public bool HaveRusInstruction
+        {
+            get { return have_rus_instruction; }
+            set { 
+                have_rus_instruction = value;
+                OnPropertyChanged(nameof(Res));
+            }
+        }
 
-      
+
         public string Res
         {
             get {
@@ -285,6 +289,10 @@ namespace WpfApp1
                         res += constr.Key+"\n";
                     }                    
                 }
+                res += "\n";
+
+                res += "Инструкция на русском:\n";
+                res += HaveRusInstruction.ToString()+"\n";
                 res += "\n";
 
                 return res;

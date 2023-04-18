@@ -261,7 +261,7 @@
                           Margin="0,2,0,0">
                     <hc:ButtonGroup Margin="4" 
                                     Style="{StaticResource ButtonGroupSolid}">
-                        <RadioButton Content="Есть" IsChecked="True"/>
+                        <RadioButton Content="Есть" IsChecked="{Binding HaveRusInstruction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <RadioButton Content="Нет"/>
                     </hc:ButtonGroup>
                 </Expander>
