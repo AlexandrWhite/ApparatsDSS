@@ -141,15 +141,26 @@
                     Style="{StaticResource InputElementBaseStyle}"
                     Header="Конструкция аппарата"
                     Margin="0,2,0,0">
-                    <Border>
-                        <hc:ButtonGroup 
+                   
+                        <!--<hc:ButtonGroup 
                             Margin="4"
-                            Style="{StaticResource ButtonGroupSolid}"
+                            Style="{StaticResource ButtonGroupBaseStyle}"
+                    
                             >
                             <RadioButton  Content="Портативный" IsChecked="True"/>
                             <RadioButton  Content="Стационарный" />
+                        </hc:ButtonGroup>-->
+
+                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+  
+                            <RadioButton Content="{Binding Constructions[0].Key}" 
+                                         IsChecked="{Binding Constructions[0].Value, 
+                                         Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <RadioButton Content="{Binding Constructions[1].Key}" 
+                                     IsChecked="{Binding Constructions[1].Value, Mode=TwoWay}"/>
                         </hc:ButtonGroup>
-                    </Border>
+
+                    
                 </Expander>
 
                 <Expander 
@@ -283,5 +294,6 @@
         <TextBlock Text="{Binding Res, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
 
 
+        
     </Grid>
 </Window>

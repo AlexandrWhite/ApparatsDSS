@@ -47,7 +47,16 @@ namespace WpfApp1
                 element.PropertyChanged += CountriesPropertyChanged;
             }
 
+            foreach (var element in construction)
+            {
+                element.PropertyChanged += Constructions_PropertyChanged;
+            }
 
+        }
+
+        private void Constructions_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Res));
         }
 
         private void CountriesPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -214,6 +223,25 @@ namespace WpfApp1
             "Экспертный"
         };
 
+
+        List<MyPair<string,bool>> construction = new List<MyPair<string,bool>>()
+        {
+             new MyPair<string, bool>( "Стационарный", true),
+             new MyPair<string, bool>( "Портативный", false)
+        };
+
+        public List<MyPair<string, bool>> Constructions
+        {
+            get { return construction; }
+            set { construction = value; }
+        }
+
+        //bool have_instruction = true
+        //public bool HaveInstruction
+        //{
+        //    get { return value}
+        //}
+
       
         public string Res
         {
@@ -249,8 +277,15 @@ namespace WpfApp1
                 }
                 res += "\n";
 
-
-
+                res += "Конструкционное исполнение:\n";
+                foreach (MyPair<string,bool> constr in Constructions)
+                {
+                    if (constr.Value)
+                    {
+                        res += constr.Key+"\n";
+                    }                    
+                }
+                res += "\n";
 
                 return res;
             }
@@ -308,6 +343,5 @@ namespace WpfApp1
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
 
 }
