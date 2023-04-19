@@ -110,6 +110,38 @@ namespace WpfApp1
                 OnPropertyChanged(nameof(Res)); }
         }
 
+        string mass = "0";
+        public string Mass
+        {
+            get { return mass; }
+            set
+            {
+                mass = value;
+                OnPropertyChanged(nameof(Res));
+            }
+        }
+
+        string min_height = "0";
+        public string MinHeight
+        {
+            get { return min_height; }
+            set { 
+                min_height = value;
+                OnPropertyChanged(nameof(Res));
+            }
+        }
+
+
+        string min_width = "0";
+        public string MinWidth
+        {
+            get { return min_width; }
+            set
+            {
+                min_width = value;
+                OnPropertyChanged(nameof(Res));
+            }
+        }
 
 
         private void Search(string query)
@@ -293,6 +325,20 @@ namespace WpfApp1
 
                 res += "Инструкция на русском:\n";
                 res += HaveRusInstruction.ToString()+"\n";
+                res += "\n";
+
+
+
+                res += "Масса:\n";
+                res += Double.Parse(Mass).ToString() + "\n";
+                res += "\n";
+
+                res += "Высота:\n";
+                res += Double.Parse(MinHeight).ToString() + "\n";
+                res += "\n";
+
+                res += "Ширина:\n";
+                res += Double.Parse(MinWidth).ToString() + "\n";
                 res += "\n";
 
                 return res;

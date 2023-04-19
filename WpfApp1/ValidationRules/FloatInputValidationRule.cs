@@ -18,7 +18,7 @@ namespace WpfApp1.ValidationRules
             }
             catch
             {
-                return new ValidationResult(false,$"Неверный формат ввода для {(string)value}");
+                return new ValidationResult(false,"");
             }
             return ValidationResult.ValidResult;
         }

@@ -94,7 +94,7 @@
                             VerticalScrollBarVisibility="Visible" 
                             Margin="4">
 
-                            <ItemsControl Name="Items" 
+                            <ItemsControl 
                                           ItemsSource="{Binding SearchResult,
                                           Mode=TwoWay,
                                           UpdateSourceTrigger=PropertyChanged 
@@ -168,26 +168,60 @@
                     Header="Габариты"
                     Style="{StaticResource InputElementBaseStyle}"
                     Margin="0,2,0,0">
-                    <StackPanel Margin="4">
-                        <hc:NumericUpDown
-                            hc:InfoElement.TitleWidth="80"
-                            hc:TitleElement.Title="Длина"
-                            hc:InfoElement.TitlePlacement="Left"
-                            Style="{StaticResource NumericUpDownExtend}"
-                            Maximum="100" Value="30"
-                            Margin="2"/>
-                        <hc:NumericUpDown
+                    <StackPanel Margin="4,0,0,20">
+                        <hc:TextBox
+                            
                             hc:InfoElement.TitleWidth="80"
                             hc:TitleElement.Title="Ширина"
                             hc:InfoElement.TitlePlacement="Left"
-                            Style="{StaticResource NumericUpDownExtend}"
-                            Maximum="100" Value="30" Margin="2"/>
-                        <hc:NumericUpDown
+                            MinWidth="150"
+                            MaxWidth="150"
+                            Margin="2">
+                            <TextBox.Text>
+                                <Binding Path="MinWidth" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <valid:FloatInputValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </hc:TextBox>
+
+                        <hc:TextBox
+                            
                             hc:InfoElement.TitleWidth="80"
                             hc:TitleElement.Title="Высота"
                             hc:InfoElement.TitlePlacement="Left"
-                            Style="{StaticResource NumericUpDownExtend}"
-                            Maximum="100" Value="30" Margin="2"/>
+                            
+                            Margin="2">
+                            <TextBox.Text>
+                                <Binding Path="MinHeight" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <valid:FloatInputValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </hc:TextBox>
+
+
+
+
+
+
+                        <hc:TextBox
+                            
+                            hc:InfoElement.TitleWidth="80"
+                            hc:TitleElement.Title="Масса"
+                            hc:InfoElement.TitlePlacement="Left"
+                            
+                            Margin="2">
+                            <TextBox.Text>
+                                <Binding Path="Mass" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <valid:FloatInputValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </hc:TextBox>
 
                     </StackPanel>
                 </Expander>
