@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:WpfApp1"
              mc:Ignorable="d"
              Name="SearchUserControl"
+             Loaded="SearchUserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="310">
 
     <StackPanel>
@@ -30,12 +31,14 @@
                 Content="Выделить всё"
                 hc:BorderElement.CornerRadius="4"
                 Name="SelectAllButton"
+                Height="30"
                 Background="{StaticResource TextIconBrush}"
                 BorderBrush="{StaticResource BorderBrush}"
                 Style="{StaticResource ButtonCustom}"
                 BorderThickness="1"
                 Margin="0,0,1,0" Click="SelectAllButton_Click"/>
             <Button
+                Height="30"
                 Name="DeselectAll"
                 Grid.Column="1"
                 Margin="1,0,0,0"
@@ -49,10 +52,12 @@
 
         </Grid>
 
-        <hc:ScrollViewer>
+        <hc:ScrollViewer
+            Height="290"
+            >
             <ItemsControl ItemsSource="{Binding 
                 ElementName=SearchUserControl,
-                Path=SearchResult}">
+                Path=SearchResult, UpdateSourceTrigger=PropertyChanged}">
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

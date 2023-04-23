@@ -24,17 +24,16 @@ namespace WpfApp1
     public partial class SearchAndCheckboxControl : UserControl, INotifyPropertyChanged 
     {
 
-        List<MyPair<string, bool>> search_result = new List<MyPair<string, bool>>();
+        ObservableCollection<MyPair<string, bool>> search_result = new ObservableCollection<MyPair<string, bool>>();
 
 
         public SearchAndCheckboxControl()
         {
             InitializeComponent();
-            SearchBar.TextChanged += SearchBar_TextChanged;
+            SearchBar.TextChanged += SearchBar_TextChanged;            
         }
 
-
-        public List<MyPair<string, bool>> SearchResult
+        public ObservableCollection<MyPair<string, bool>> SearchResult
         {
             get { return search_result; }
         }
@@ -42,9 +41,11 @@ namespace WpfApp1
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             string query = SearchBar.Text.ToLower();
-            //search_result.Clear();
-
-            search_result = SearchData.Where(s => s.Key.ToLower().Contains(query)).ToList();
+            SearchResult.Clear();
+            foreach (var element in SearchData.Where(s => s.Key.ToLower().Contains(query)))
+            {
+                SearchResult.Add(element);
+            }
             OnPropertyChanged(nameof(SearchResult));                
         }
 
@@ -99,8 +100,8 @@ namespace WpfApp1
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //...............................///
-           
           
+            
         }
 
         
@@ -110,6 +111,12 @@ namespace WpfApp1
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void SearchUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            foreach(var element in SearchData)
+                search_result.Add(element);
         }
     }
 }

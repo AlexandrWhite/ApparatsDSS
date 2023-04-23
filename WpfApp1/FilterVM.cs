@@ -205,6 +205,11 @@ namespace WpfApp1
 
         };
 
+        public ObservableCollection<MyPair<string, bool>> SensorsData
+        {
+            get { return sensors_data; }
+        }
+
 
         List<string> selected_countries = new List<string>();
         private ObservableCollection<MyPair<string, bool>> countries_data = new ObservableCollection<MyPair<string, bool>>()
@@ -213,7 +218,7 @@ namespace WpfApp1
             new MyPair<string, bool>( "Дания", false),
             new MyPair<string, bool>( "Италия", false),
             new MyPair<string, bool>( "Китай", false),
-            new MyPair<string, bool>( "Недерланды", false),
+            new MyPair<string, bool>( "Нидерланды", false),
             new MyPair<string, bool>( "Республика Корея", false),
             new MyPair<string, bool>( "Россия", false),
             new MyPair<string, bool>( "США", false),
