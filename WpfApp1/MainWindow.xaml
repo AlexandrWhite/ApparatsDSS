@@ -19,6 +19,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="310"/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <hc:ScrollViewer>
@@ -168,7 +169,7 @@
                     Header="Габариты"
                     Style="{StaticResource InputElementBaseStyle}"
                     Margin="0,2,0,0">
-                    <StackPanel Margin="4,0,0,20">
+                    <StackPanel Margin="4,0,0,0">
                         <hc:TextBox
                             
                             hc:InfoElement.TitleWidth="80"
@@ -259,6 +260,80 @@
                           Style="{StaticResource InputElementBaseStyle}"
                           Margin="0,2,0,0">
 
+                    <StackPanel>
+                        <StackPanel>
+                            <hc:SearchBar
+                                Margin="2"
+                                
+                                Command="{Binding SearchCommand}"
+                                CommandParameter="{Binding Text,RelativeSource={RelativeSource Self}}"
+                                Style="{StaticResource SearchBarExtend}"
+                                hc:InfoElement.Placeholder="Поиск по ультразвуковым датчикам"
+                                IsRealTime="True"/>
+
+
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button Content="Выделить всё" Margin="2" 
+                                    Height="30"
+                                    Command="{Binding SelectAllCommand}"
+                                    Background="{StaticResource TextIconBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}"
+                                    BorderThickness="1"
+                                    Style="{StaticResource ButtonCustom}"/>
+                                <Button Content="Снять выделения" Margin="2" 
+                                    Grid.Column="1"
+                                    Command="{Binding DeselectAllCommand}"
+                                    Height="30"
+                                    Background="{StaticResource TextIconBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}"
+                                    BorderThickness="1"
+                                    Style="{StaticResource ButtonCustom}"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <hc:ScrollViewer 
+                            Height="290"
+                            Width="260"
+                            VerticalScrollBarVisibility="Visible" 
+                            Margin="4">
+
+                            <ItemsControl 
+                                          ItemsSource="{Binding SearchResult,
+                                          Mode=TwoWay,
+                                          UpdateSourceTrigger=PropertyChanged 
+                                          }" >
+
+
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox HorizontalAlignment="Left"
+                                                  IsChecked="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <TextBlock 
+                                                Margin="2"
+                                                Text="{Binding Key}"
+                                                TextWrapping="Wrap"
+                                            />
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate >
+                                        <StackPanel HorizontalAlignment="Left"  Width="250"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </hc:ScrollViewer>
+
+                    </StackPanel>
+
+
+
                 </Expander>
 
                 <Expander  Header="Страна изготовитель"
@@ -326,8 +401,12 @@
         </DataGrid>-->
 
         <TextBlock Text="{Binding Res, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+        <local:SearchAndCheckboxControl
+            Margin="5"
+            SearchTooltipText="Поиск по областям применения" 
+            SearchData="{Binding Countries}"
+            Grid.Column="2"/>
 
 
-        
     </Grid>
 </Window>

@@ -175,8 +175,36 @@ namespace WpfApp1
             new MyPair<string, bool>( "Исследование поверхностных органов", false),
             new MyPair<string, bool>( "Исследование поверхностных структур", false),
             new MyPair<string, bool>( "Исследование предстательной железы", false),
-            new MyPair<string, bool>( "Исследование сонной артерии", false),
+            new MyPair<string, bool>( "Исследование сонной артерии", false)
         };
+
+        private ObservableCollection<MyPair<string, bool>> sensors_data = new ObservableCollection<MyPair<string, bool>>()
+        {
+            new MyPair<string, bool>("Биопсийный",false),
+            new MyPair<string, bool>("Биплановый",false),
+            new MyPair<string, bool>("Внутриполостной",false),
+
+            new MyPair<string, bool>("Высокоплотный",false),
+            new MyPair<string, bool>("Доплеровский",false),
+            new MyPair<string, bool>("Интераоперационный",false),
+
+            new MyPair<string, bool>("Карандашный",false),
+            new MyPair<string, bool>("Конвексный",false),
+            new MyPair<string, bool>("Лапароскопический",false),
+
+            new MyPair<string, bool>("Линейный",false),
+            new MyPair<string, bool>("Матричный",false),
+            new MyPair<string, bool>("Микроконвексный",false),
+
+            new MyPair<string, bool>("Объемный",false),
+            new MyPair<string, bool>("Секторный",false),
+            new MyPair<string, bool>("Секторный фазированный",false),
+
+            new MyPair<string, bool>("Фазированный",false),
+            new MyPair<string, bool>("Чреспищеводный",false)
+
+        };
+
 
         List<string> selected_countries = new List<string>();
         private ObservableCollection<MyPair<string, bool>> countries_data = new ObservableCollection<MyPair<string, bool>>()
