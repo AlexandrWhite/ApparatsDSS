@@ -16,26 +16,31 @@ namespace WpfApp1
     class FilterVM:INotifyPropertyChanged
     {
         List<string> selected_fields = new List<string>();
-
-       
-
-
+        List<string> selected_countries = new List<string>();
+        List<string> selected_sensors = new List<string>();
 
         public FilterVM()
-        {                     
-
+        {                    
 
             foreach (var element in using_fields_data)             
                 element.PropertyChanged += FieldsElementPropertyChanged;
-            
-
-
+           
             foreach(var element in countries_data)
                 element.PropertyChanged += CountriesPropertyChanged;
 
             foreach (var element in construction)
                 element.PropertyChanged += Constructions_PropertyChanged;
 
+            foreach(var element in sensors_data)
+                element.PropertyChanged += Sensors_PropertyChanged;
+
+        }
+
+        private void Sensors_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            MyPair<string, bool> element = sender as MyPair<string, bool>;
+            updateSelectedList(element, selected_sensors);
+            OnPropertyChanged(nameof(Res));
         }
 
         private void Constructions_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -43,31 +48,29 @@ namespace WpfApp1
             OnPropertyChanged(nameof(Res));
         }
 
-        private void CountriesPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            MyPair<string, bool> element = sender as MyPair<string, bool>;
 
-            if (element.Value && selected_countries.Find(s => s == element.Key) is null)
-                selected_countries.Add(element.Key);
+        private void updateSelectedList(MyPair<string, bool> element,List<string> selected_list)
+        {
+            
+            if (element.Value && selected_list.Find(s => s == element.Key) is null)
+                selected_list.Add(element.Key);
             else if (element.Value == false)
-                selected_countries.Remove(element.Key);
+                selected_list.Remove(element.Key);
+        }
+
+        private void CountriesPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {         
+            MyPair<string, bool> element = sender as MyPair<string, bool>;
+            updateSelectedList(element, selected_countries);
             OnPropertyChanged(nameof(Res));
         }
 
         private void FieldsElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             MyPair<string, bool> element = sender as MyPair<string, bool>;
-            
-            if (element.Value && selected_fields.Find(s => s == element.Key) is null)
-                selected_fields.Add(element.Key);
-            else if (element.Value == false)
-                selected_fields.Remove(element.Key);
+            updateSelectedList(element, selected_fields);
             OnPropertyChanged(nameof(Res));
-        }
-
-       
-
-
+        }     
 
         //float monitor_diag;
         string monitor_diag="0";
@@ -164,7 +167,7 @@ namespace WpfApp1
             get { return using_fields_data; }
         }
 
-        List<MyPair<string, bool>> selected_sensors;
+      
 
         private ObservableCollection<MyPair<string, bool>> sensors_data = new ObservableCollection<MyPair<string, bool>>()
         {
@@ -198,7 +201,7 @@ namespace WpfApp1
         }
 
 
-        List<string> selected_countries = new List<string>();
+        
         private ObservableCollection<MyPair<string, bool>> countries_data = new ObservableCollection<MyPair<string, bool>>()
         {
             new MyPair<string, bool>( "Германия", false),
@@ -300,6 +303,19 @@ namespace WpfApp1
                 }
 
                 res += "\n";
+
+
+
+                res += "Набор датчиков:\n";
+                foreach (string sensor in selected_sensors)
+                {
+                    res += sensor + "\n";
+                }
+
+                res += "\n";
+
+
+
                 res += "Класс препарата:\n";
                 res += apparatClasses[selected_class_index] +"\n";
 
