@@ -15,42 +15,26 @@ namespace WpfApp1
 {
     class FilterVM:INotifyPropertyChanged
     {
-        public RelayCommand<string> SearchCommand { get; }
-        public RelayCommand SelectAllCommand { get; }
-        public RelayCommand DeselectAllCommand { get;  }
-
-
-
         List<string> selected_fields = new List<string>();
 
-        ObservableCollection<MyPair<string, bool>> search_result = new ObservableCollection<MyPair<string, bool>>();
+       
 
 
 
         public FilterVM()
-        {            
-            SearchCommand = new RelayCommand<string>(Search);
-            SelectAllCommand = new RelayCommand(SelectAll);
-            DeselectAllCommand = new RelayCommand(DeselectAll);
-           
+        {                     
 
 
-            foreach (var element in using_fields_data)
-            {
-                search_result.Add(element);
+            foreach (var element in using_fields_data)             
                 element.PropertyChanged += FieldsElementPropertyChanged;
-            }
+            
 
 
             foreach(var element in countries_data)
-            {
                 element.PropertyChanged += CountriesPropertyChanged;
-            }
 
             foreach (var element in construction)
-            {
                 element.PropertyChanged += Constructions_PropertyChanged;
-            }
 
         }
 
@@ -83,21 +67,6 @@ namespace WpfApp1
 
        
 
-        private void SelectAll()
-        {        
-            foreach (var element in SearchResult)
-                element.Value = true;         
-            OnPropertyChanged(nameof(SearchResult));
-            OnPropertyChanged(nameof(Res));
-        }
-
-        private void DeselectAll()
-        {
-            foreach (var element in SearchResult)            
-                element.Value = false;            
-            OnPropertyChanged(nameof(SearchResult));
-            OnPropertyChanged(nameof(Res));
-        }
 
 
         //float monitor_diag;
@@ -144,39 +113,58 @@ namespace WpfApp1
         }
 
 
-        private void Search(string query)
-        {           
-            query = query.ToLower();
-            SearchResult.Clear();
-
-            var find_list = using_fields_data.Where(s => s.Key.ToLower().Contains(query));
-
-
-            if (find_list is not null) {
-                foreach (var element in find_list)
-                {
-                    SearchResult.Add(element);
-                }             
-                OnPropertyChanged(nameof(SearchResult));
-            }
-        }
 
         private ObservableCollection<MyPair<string, bool>> using_fields_data = new ObservableCollection<MyPair<string, bool>>() 
         {
             new MyPair<string, bool>( "Абдоминальные исследования", false),
+            new MyPair<string, bool>( "Акушерство и гинекология", false),
+            new MyPair<string, bool>( "Ангиология", false),
+            new MyPair<string, bool>( "Биопсия", false),
             new MyPair<string, bool>( "Внутриполостные исследования", false),
             new MyPair<string, bool>( "Гастроэнтерология", false),
             new MyPair<string, bool>( "Интраоперационные исследования", false),
-            new MyPair<string, bool>( "Исследования малых органов", false),
-            new MyPair<string, bool>( "Исследования молочной железы", false),
-            new MyPair<string, bool>( "Исследования мочевого пузыря", false),
+            new MyPair<string, bool>( "Исследование малых органов", false),
+            new MyPair<string, bool>( "Исследование молочной железы", false),
+            new MyPair<string, bool>( "Исследование мочевого пузыря", false),
             new MyPair<string, bool>( "Исследование опорно-двигательной системы", false),
             new MyPair<string, bool>( "Исследование органов брюшной полости", false),
             new MyPair<string, bool>( "Исследование поверхностных органов", false),
             new MyPair<string, bool>( "Исследование поверхностных структур", false),
+            new MyPair<string, bool>( "Исследование почек", false),
             new MyPair<string, bool>( "Исследование предстательной железы", false),
-            new MyPair<string, bool>( "Исследование сонной артерии", false)
+            new MyPair<string, bool>( "Исследование сонной артерии", false),
+            new MyPair<string, bool>( "Исследование сосудов", false),
+            new MyPair<string, bool>( "Исследование щитовидной железы", false),
+            new MyPair<string, bool>( "Кардиология", false),
+            new MyPair<string, bool>( "Лапароскопия", false),
+            new MyPair<string, bool>( "Маммология", false),
+            new MyPair<string, bool>( "Неврология", false),
+            new MyPair<string, bool>( "Нейросонография", false),
+            new MyPair<string, bool>( "Неонатология", false),
+            new MyPair<string, bool>( "Нефрология", false),
+            new MyPair<string, bool>( "Общие исследования", false),
+            new MyPair<string, bool>( "Онкология", false),
+            new MyPair<string, bool>( "Ортопедия", false),
+            new MyPair<string, bool>( "Офтальмология", false),
+            new MyPair<string, bool>( "Педиатрия", false),
+            new MyPair<string, bool>( "Рентгенология", false),
+            new MyPair<string, bool>( "Травматология", false),
+            new MyPair<string, bool>( "Транскраниальные исследования", false),
+            new MyPair<string, bool>( "Урология", false),
+            new MyPair<string, bool>( "Хирургия", false),
+            new MyPair<string, bool>( "Чреспищеводные исследования", false),
+            new MyPair<string, bool>( "Эластография", false),
+            new MyPair<string, bool>( "Эндокринология", false),
+            new MyPair<string, bool>( "Эндоскопия", false),
+            new MyPair<string, bool>( "Эхокардиография", false)
         };
+
+        public ObservableCollection<MyPair<string, bool>> UsingFieldsData
+        {
+            get { return using_fields_data; }
+        }
+
+        List<MyPair<string, bool>> selected_sensors;
 
         private ObservableCollection<MyPair<string, bool>> sensors_data = new ObservableCollection<MyPair<string, bool>>()
         {
@@ -201,8 +189,7 @@ namespace WpfApp1
             new MyPair<string, bool>("Секторный фазированный",false),
 
             new MyPair<string, bool>("Фазированный",false),
-            new MyPair<string, bool>("Чреспищеводный",false)
-
+            new MyPair<string, bool>("Чреспищеводный",false)          
         };
 
         public ObservableCollection<MyPair<string, bool>> SensorsData
@@ -239,18 +226,7 @@ namespace WpfApp1
         }
 
 
-        public ObservableCollection<MyPair<string, bool>> SearchResult
-        {
-            get { return search_result; }
-            set
-            {
-                if (search_result != value)
-                {
-                    search_result = value;                    
-                    OnPropertyChanged(nameof(SearchResult));
-                }
-            }
-        }
+
 
 
 

@@ -54,6 +54,7 @@
 
         <hc:ScrollViewer
             Height="290"
+            Margin="0,10,0,0"
             >
             <ItemsControl ItemsSource="{Binding 
                 ElementName=SearchUserControl,
