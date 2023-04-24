@@ -41,7 +41,7 @@
                     hc:BackgroundSwitchElement.MouseHoverBackground="#FFE6A3"
                     hc:BackgroundSwitchElement.MouseDownBackground="#FFD366"
                     Content="Вернуться в меню" 
-                    Style="{StaticResource ButtonCustom}" Click="Button_Click"/>
+                    Style="{StaticResource ButtonCustom}"/>
                     
                 <Expander 
                     
@@ -267,7 +267,7 @@
         </DataGrid>-->
 
         <TextBlock Text="{Binding Res, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
-        
+        <DataGrid Grid.Column="2" ItemsSource="{Binding Countries}"/>
 
     </Grid>
 </Window>
