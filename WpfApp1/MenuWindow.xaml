@@ -1,0 +1,109 @@
+﻿<Page x:Class="WpfApp1.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        d:Height="600" d:Width="800"
+        Title="СППР УЗ-аппарат">
+
+
+
+    <Grid>
+        <!--<Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFFFCBA8" Offset="0.807"/>
+                <GradientStop Color="#FFFFC4D3" Offset="0.129"/>
+            </LinearGradientBrush>
+        </Grid.Background>-->
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel VerticalAlignment="Top" Margin="20">
+            <Button Style="{StaticResource ButtonCustom}" 
+                    Height="35"
+                    hc:BorderElement.CornerRadius="4"
+
+                    BorderBrush="#B199C6"
+                    BorderThickness="1"
+                    hc:BackgroundSwitchElement.MouseDownBackground="#B199C6"
+                    hc:BackgroundSwitchElement.MouseHoverBackground="#B0BDF4"
+                    
+                    Background="#e9cfff"
+                    Content="Подбор аппарата" Margin="2" Click="Button_Click"/>
+            
+            <Button Style="{StaticResource ButtonCustom}" 
+                    Height="35"
+                    hc:BorderElement.CornerRadius="4"
+                    Background="#e9cfff"
+                    hc:BackgroundSwitchElement.MouseDownBackground="#B199C6"
+                    hc:BackgroundSwitchElement.MouseHoverBackground="#B0BDF4"
+                    BorderBrush="#B199C6"
+                    BorderThickness="1"
+                    Content="Создание сборки" Margin="2"/>
+            <Button Style="{StaticResource ButtonCustom}" 
+                    Height="35"
+                    hc:BorderElement.CornerRadius="4"
+                    hc:BackgroundSwitchElement.MouseDownBackground="#B199C6"
+                    hc:BackgroundSwitchElement.MouseHoverBackground="#B0BDF4"
+                    BorderBrush="#B199C6"
+                    BorderThickness="1"
+                    Background="#e9cfff"
+                    Content="Справка" Margin="2"/>
+
+            <Button Style="{StaticResource ButtonCustom}" 
+                    Height="35"
+                    hc:BorderElement.CornerRadius="4"
+                    hc:BackgroundSwitchElement.MouseDownBackground="#B199C6"
+                    hc:BackgroundSwitchElement.MouseHoverBackground="#B0BDF4"
+                    Background="#e9cfff"
+                    BorderBrush="#B199C6"
+                    BorderThickness="1"
+                    Content="Рекомендации по выбору" Margin="2"/>
+
+
+        </StackPanel>
+
+        <TextBlock Text="Автор: Полина Новохатская. 2023 год" 
+                   VerticalAlignment="Bottom" 
+                   Margin="5"
+                   Foreground="Gray"/>
+
+        <Image 
+            Source="Images\background.jpg" Grid.Column="1" Stretch="UniformToFill"/>
+        <Border Grid.Column="1">
+
+
+
+            <StackPanel VerticalAlignment="Bottom">
+                <Border
+            
+                Background="#66000000"
+                
+                VerticalAlignment="Bottom"
+                >
+
+
+
+
+                    <TextBlock 
+                    VerticalAlignment="Bottom"
+                        
+                        Foreground="White"
+                        Padding="12"
+                        FontWeight="Bold"
+                        TextWrapping="WrapWithOverflow"
+                        
+                        FontSize="40"
+                        Text="Система поддержки принятия решений выбора оптимальной модели УЗ-апррата" />
+
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

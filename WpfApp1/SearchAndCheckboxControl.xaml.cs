@@ -84,7 +84,7 @@ namespace WpfApp1
 
         public static readonly DependencyProperty SearchDataProperty =
             DependencyProperty.Register("SearchData", typeof(ObservableCollection<MyPair<string, bool>>), 
-            typeof(SearchAndCheckboxControl), new FrameworkPropertyMetadata(null,
+            typeof(SearchAndCheckboxControl), new FrameworkPropertyMetadata(new ObservableCollection<MyPair<string,bool>>(),
                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnTextChanged), new CoerceValueCallback(CoerceText)));
 

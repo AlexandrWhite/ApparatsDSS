@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,8 +21,22 @@ namespace WpfApp1
         List<string> selected_countries = new List<string>();
         List<string> selected_sensors = new List<string>();
 
+        ApparatModel apm = new ApparatModel();
+
+        ApparatFilterModel apmf = new ApparatFilterModel();
+
+        public IMongoCollection<Apparat> TestData
+        {
+            get { return apmf.dosmth(); }
+        }
+
+
         public FilterVM()
-        {                    
+        {
+            //apm.show_apparats();
+
+        
+           
 
             foreach (var element in using_fields_data)             
                 element.PropertyChanged += FieldsElementPropertyChanged;
@@ -34,6 +50,15 @@ namespace WpfApp1
             foreach(var element in sensors_data)
                 element.PropertyChanged += Sensors_PropertyChanged;
 
+        }
+
+
+        public ObservableCollection<MyPair<string,bool>> Apparats
+        {
+            get 
+            {
+                return countries_data;
+            }
         }
 
         private void Sensors_PropertyChanged(object sender, PropertyChangedEventArgs e)
