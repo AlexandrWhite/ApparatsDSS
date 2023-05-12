@@ -10,6 +10,9 @@
 
   <ItemGroup>
     <None Remove="Images\background.jpg" />
+    <None Remove="Images\Book24px.png" />
+    <None Remove="Images\closed-book-48.png" />
+    <None Remove="Images\open-book-48.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +24,15 @@
 
   <ItemGroup>
     <Resource Include="Images\background.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Book24px.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\closed-book-48.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\open-book-48.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

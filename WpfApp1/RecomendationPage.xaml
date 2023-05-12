@@ -5,10 +5,1123 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfApp1"
       mc:Ignorable="d" 
+      xmlns:hc="https://handyorg.github.io/handycontrol"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="RecomendationPage">
 
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisible"/>
+        <Image Source="Images/Book24px.png" x:Key="BookIcon"/>
+
+        <Style TargetType="Paragraph">
+            <Setter Property="TextIndent" Value="20"/>
+        </Style>
+    </Page.Resources>
+
+
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button
+                Grid.Row="0"
+                    Height="30" Padding="10,0"
+                    Background="#FFD869"
+                    Margin="2,3,2,3"
+                    hc:BorderElement.CornerRadius="4"
+                    hc:BackgroundSwitchElement.MouseHoverBackground="#FFE6A3"
+                    hc:BackgroundSwitchElement.MouseDownBackground="#FFD366"
+                    Content="Вернуться в меню"
+                    Click="Button_Click"
+                    Style="{StaticResource ButtonCustom}"/>
+
+
+            <TreeView  Grid.Row="1" Margin="3" Background="#e9cfff" HorizontalAlignment="Stretch">
+
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <ToggleButton x:Name="Expander" Padding="10" ClickMode="Press" IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        <ContentPresenter Grid.Column="1" ContentSource="Header"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Border Background="#e9cfff" CornerRadius="3" Padding="2">
+                                    <StackPanel Orientation="Horizontal" >
+                                        <Image Source="/Images/closed-book-48.png" Width="24" Height="24" Margin="4"/>
+                                        <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                                    
+                            </Setter.Value>
+                        </Setter>
+
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <Border Background="#D4A3FF" CornerRadius="3" Padding="2">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="/Images/open-book-48.png" Width="24" Height="24" Margin="4"/>
+                                                    <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+
+                    </Style>
+
+
+
+                </TreeView.ItemContainerStyle>
+
+
+
+                <TreeViewItem Name="AimTreeItem" Header="Цель приобретения"/>
+                <TreeViewItem Name="ClassTreeItem" Header="Класс" />
+                <TreeViewItem Name ="ConstrTreeItem" Header="Конструкционное исполнение"   />
+                <TreeViewItem Name ="UltraSoundTreeItem" Header="Ультразвуковые датчики" IsSelected="True" />
+                <TreeViewItem Name="ManufactureTreeItem" Header="Производитель"/>
+                <TreeViewItem Name="CostTreeItem" Header="Стоимость"/>
+                <TreeViewItem Name="GuaranteeTreeItem" Header="Гарантия"/>
+
+
+            </TreeView>
+        </Grid>
+
+        <RichTextBox Grid.Column="2"
+                 
+                 Visibility="{Binding 
+                 ElementName=AimTreeItem, 
+                 Path=IsSelected,
+                 UpdateSourceTrigger=PropertyChanged,
+                 Converter={StaticResource BoolToVisible}}"
+                 
+                
+                 Margin="3,3,3,3">
+
+            <FlowDocument>
+                <Section BreakPageBefore="True">
+                    <Paragraph FontSize="20">
+                        <Bold>Цель приобретения</Bold>
+                    </Paragraph>
+                </Section>
+                <Paragraph>
+                    При выборе ультразвукового аппарата (далее УЗ-аппарата) прежде всего,
+                    стоит ориентироваться на то, в какой конкретно области 
+                    медицины он будет использоваться. 
+                    Наиболее часто УЗ-аппараты приобретают для
+                    следующих областей:
+                </Paragraph>
+
+                <List MarkerStyle="Decimal">
+                    <ListItem>
+                        <Paragraph>Акушерство и гинекология</Paragraph>
+                    </ListItem>
+
+                    <ListItem>
+                        <Paragraph>
+                            Исследование внутренних органов, 
+                            например: печени, почек, поджелудочной железы, 
+                            селезенки, мочевого пузыря и многих других.
+                        </Paragraph>
+                    </ListItem>
+
+                    <ListItem>
+                        <Paragraph>
+                            Кардиология и сосудистая хирургия.
+                        </Paragraph>
+                    </ListItem>
+
+                    <ListItem>
+                        <Paragraph>
+                            Маммология.
+                        </Paragraph>
+                    </ListItem>
+
+                    <ListItem>
+                        <Paragraph>
+                            Ортопедия
+                        </Paragraph>
+                    </ListItem>
+
+
+                </List>
+
+                <Section>
+                    <BlockUIContainer>
+                        <Border  Style="{StaticResource BorderTipDanger}"  Width="400" Effect="{StaticResource EffectShadow1}">
+                           
+                          
+                                
+                                <TextBlock TextWrapping="Wrap" Grid.Column="1">
+                                    Если вы хотите использовать УЗ-аппарат 
+                                    сразу для нескольких областей, то стоит обратить внимание 
+                                    на универсальные аппараты, которые 
+                                    способны решать сразу несколько задач.
+                                </TextBlock>
+                           
+                            
+                        </Border>
+
+                    </BlockUIContainer>
+                </Section>
+
+            </FlowDocument>
+
+        </RichTextBox>
+
+        <RichTextBox Grid.Column="2"
+                 
+                 Visibility="{Binding 
+                 ElementName=ClassTreeItem, 
+                 Path=IsSelected,
+                 UpdateSourceTrigger=PropertyChanged,
+                 Converter={StaticResource BoolToVisible}}"
+                 
+                
+                 Margin="3,3,3,3">
+            <FlowDocument>
+                <Section BreakPageBefore="True">
+                    <Paragraph FontSize="20">
+                        <Bold>Класс</Bold>
+                    </Paragraph>
+                </Section>
+                <Paragraph>
+                    Четких критериев разделения аппаратов на классы
+                    пока не существует. Производитель обычно сам дает оценку 
+                    своей продукции. Однако на основании уровня разрешающей способности, 
+                    степени чувствительности и наличию определенных физических каналов
+                    существует несколько классов УЗ-аппаратов:
+                </Paragraph>
+
+
+                <List MarkerStyle="Disc">
+                    <ListItem>
+                        <Paragraph>базовый;</Paragraph>
+                    </ListItem>
+
+                    <ListItem>
+                        <Paragraph>
+                            средний;
+                        </Paragraph>
+                    </ListItem>
+
+                    <ListItem>
+                        <Paragraph>
+                            высокий;
+                        </Paragraph>
+                    </ListItem>
+
+                    <ListItem>
+                        <Paragraph>
+                            премиальный;
+                        </Paragraph>
+                    </ListItem>
+
+                    <ListItem>
+                        <Paragraph>
+                            экспертный.
+                        </Paragraph>
+                    </ListItem>
+                </List>
+
+
+                <Section>
+                    <BlockUIContainer>
+                        <Border Style="{StaticResource BorderTipDanger}"   Width="400">
+                            
+
+                                <TextBlock TextWrapping="Wrap" Grid.Column="1">
+                                    Из-за отсутствия четких критериев классификации 
+                                    УЗ-аппарат в разных источниках может быть отнесен 
+                                    к двум классам одновременно, поэтому не стоит удивляться,
+                                    если в одном магазине аппарат имеет премиальный класс, 
+                                    а в другом – экспертный.
+                                </TextBlock>
+                           
+                        </Border>
+
+                    </BlockUIContainer>
+                </Section>
+
+            </FlowDocument>
+        </RichTextBox>
+
+        <!--Конструктивное исполнение-->
+        <ScrollViewer 
+            Grid.Column="2"
+            Margin="3,3,3,3"
+            VerticalScrollBarVisibility="Auto"
+                 Visibility="{Binding 
+                 ElementName=ConstrTreeItem, 
+                 Path=IsSelected,
+                 UpdateSourceTrigger=PropertyChanged,
+                 Converter={StaticResource BoolToVisible}}">
+            <RichTextBox>
+
+                <FlowDocument PagePadding="10">
+                    <Section BreakPageBefore="True">
+                        <Paragraph FontSize="20">
+                            <Bold>Конструкционное исполнение</Bold>
+                        </Paragraph>
+                    </Section>
+
+                    <Paragraph>
+                        По своей конструкции УЗ-аппарат может быть стационарным 
+                    или портативным (переносным). Стационарный аппарат необходим
+                    для крупных ЛПУ (как частных, так и государственных). 
+                    Подобная техника отличается большими габаритами,
+                    широким спектром различных режимов и функций 
+                    и более удобной панелью управления. У монитора
+                    стационарных аппаратов имеется большая диагональ, 
+                    благодаря которой можно рассмотреть даже мельчайшие детали. 
+                    Они часто применяются для:
+
+                    </Paragraph>
+
+
+                    <List MarkerStyle="Disc">
+
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                контроля развития плода;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph  TextIndent="5">
+                                исследования сердца и сосудов, органов малого таза;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph  TextIndent="5">
+                                проведения хирургических операций.
+                            </Paragraph>
+                        </ListItem>
+
+                    </List>
+
+                    <Section>
+                        <BlockUIContainer>
+                            <Border Style="{StaticResource BorderTipDanger}"   Width="400">
+                                
+                                    <TextBlock TextWrapping="Wrap" Grid.Column="1">
+                                    Хоть стационарные аппараты и не используются 
+                                    вне конкретного кабинета, в последнее время
+                                    производители часто добавляют им колесики для
+                                    более удобного передвижения.
+
+                                    </TextBlock>
+                             
+                            </Border>
+                        </BlockUIContainer>
+                    </Section>
+
+                    <Paragraph>
+                        Портативный аппарат с виду похож на обычный ноутбук.
+                    Он отличается небольшим весом, уникальными программами 
+                    и встроенными портативными аккумуляторными батареями. 
+                    Эта техника не требует долгой подготовки к работе
+                    и способна решать практически все те же самые задачи, 
+                    что и стационарная. Используется в машинах скорой помощи,
+                    на дому у пациента, в операционных и реанимационных, 
+                    то есть там, где нужно срочно произвести диагностику.
+                    </Paragraph>
+
+                    <Section>
+                        <BlockUIContainer>
+                            <Border Style="{StaticResource BorderTipDanger}" Width="400">
+                               
+                                    <TextBlock TextWrapping="Wrap" Grid.Column="1">
+                                   Опытные производители 
+                                    оснащают портативный аппарат системами 
+                                    охлаждения и сенсорной панелью управления, 
+                                    что значительно упрощает работу с ним.
+                                    </TextBlock>
+                               
+                            </Border>
+                        </BlockUIContainer>
+                    </Section>
+
+
+                    <Paragraph LineHeight="20"/>
+
+
+                </FlowDocument>
+
+            </RichTextBox>
+        </ScrollViewer>
+
+
+        <!--Ультразвуковые датчики-->
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                 Grid.Column="2"
+                 Margin="3,3,3,3"
+          
+                 Visibility="{Binding 
+                 ElementName=UltraSoundTreeItem, 
+                 Path=IsSelected,
+                 UpdateSourceTrigger=PropertyChanged,
+                 Converter={StaticResource BoolToVisible}}">
+
+
+
+            <RichTextBox IsReadOnly="True">
+                <FlowDocument>
+                    <Section BreakPageBefore="True">
+                        <Paragraph FontSize="20">
+                            <Bold>Ультразвуковые датчики</Bold>
+                        </Paragraph>
+                    </Section>
+
+                    <Paragraph>
+                        Основные типы датчиков УЗ-аппарата:
+                    </Paragraph>
+
+                    <List>
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                конвексный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                микроконвексный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                линейный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                секторный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                секторный фазированный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                внтутриполостной;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                биплановый;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                карандашный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                чреспищеводный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                объемный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                матричный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                интраоперационный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                доплеровский;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                лапароскопический;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                биопсийный;
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem>
+                            <Paragraph TextIndent="5">
+                                высокоплотный.
+                            </Paragraph>
+                        </ListItem>
+                    </List>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Конвексный (абдоминальный) датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Его частота составляет 2-7,5 МГц, а 
+                            глубина проникновения – до 25 см. 
+                            Без конвексного датчика практически нельзя 
+                            представить современный аппарат. Имеет
+                            выпуклую форму области сканирования. Хорошо справляется 
+                            с визуализацией структур, даже тех, которые расположены на
+                            достаточно большой глубине. 
+                            Используется для исследования:
+
+                        </Paragraph>
+
+                        <List>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    органов брюшной полости;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    мочеполовой системы;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    костно-мышечной системы;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    состояния плода и др.
+                                </Paragraph>
+                            </ListItem>
+
+                        </List>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Микроконвексный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Представляет собой разновидность конвексного датчика,
+                            поскольку имеет практически те же технические характеристики 
+                            и с его помощью проводятся те же диагностические исследования.
+                            Правда апертура у него будет меньше. 
+                            Используется в неонатологии и педиатрии.
+                        </Paragraph>
+                    </Section>
+
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Линейный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Его частота варьируется от 5 до 15 МГц. 
+                            Глубина сканирования – не более 11 см. 
+                            Имеет прямоугольную форму области сканирования. 
+                            Используется для исследования:
+                        </Paragraph>
+
+                        <List>
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    щитовидной и молочной железы;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    костно-мышечной системы;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    сосудов;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    малых органов и поверхностных структур.
+                                </Paragraph>
+                            </ListItem>
+
+                        </List>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Секторный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Частота находится в пределах от 1,5 до 5 МГц. 
+                            Предназначен для получения обзора небольшого участка.
+                            Используется для исследования:
+                        </Paragraph>
+
+                        <List>
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    сердечной мышцы;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    малых органов;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    промежутков между ребрами.
+                                </Paragraph>
+                            </ListItem>
+                        </List>
+
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Секторный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Частота находится в пределах от 1,5 до 5 МГц. 
+                            Предназначен для получения обзора небольшого участка.
+                            Используется для исследования:
+                        </Paragraph>
+
+
+                        <List>
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    пищевода;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    органов брюшной полости;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    головного мозга.
+                                </Paragraph>
+                            </ListItem>
+                        </List>
+
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Внутриполостной датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Частота колеблется в пределах от 3,5 до 11,5 МГц. 
+                            Его разновидностью является трансвагинальный
+                            ,трансректальный, ректально-вагинальный датчик.
+                            Используется для исследования:
+                        </Paragraph>
+
+                        <List>
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    органов малого таза;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    почек и мочеточника;
+                                </Paragraph>
+                            </ListItem>
+
+                            <ListItem>
+                                <Paragraph TextIndent="5">
+                                    предстательной железы.
+                                </Paragraph>
+                            </ListItem>
+                        </List>
+
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Биплановый датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Представляет собой два объединенных излучателя – 
+                            конвексный+конвексный или конвексный+линейный. 
+                            С его помощью получают изображения в продольном и в поперечном срезе. 
+                            Существует также трехплоскостной датчик, который
+                            обеспечивает получение изображения сразу в трех плоскостях.
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Карандашный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Обычно имеет частоту от 2 до 8 МГц.
+                            Применяются для измерения кровотока в сосудах, 
+                            оценки артерий, вен конечностей и шеи.
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Чреспищеводный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Рабочая частота данного типа датчика составляет от 2,5 до 10 МГц.
+                            Используется для чреспищеводной эхокардиографии. 
+                            Имеет небольшую апертуру. Применяется в кардиологии 
+                            для получения улучшенного изображения сердца,
+                            выполняемого через пищевод.
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Объемный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Используется для получения
+                            трехмерных изображений различных органов.
+                            Дают возможность получить посрезовое
+                            сканирование органов, которое потом преобразуется в 
+                            объемную картинку с помощью УЗ-аппарата.
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Матричный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Бывает полутомерный (с его помощью
+                            получают максимальное разрешение по толщине) и
+                            двумерный (дает прямоугольную форму области сканирования).
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Интраоперационный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            С его помощью исследуют скелетно-мышечную систему, 
+                            проводят интраоперационные исследования. 
+                            Он также незаменим для неврологии и анестизиологии.
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Доплеровский датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Помогает оценить процессы движения крови по сосудам.
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Лапароскопический датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Его используют во время проведения операций.
+                            Он способен изгибаться в одной или двух плоскостях 
+                            или не изгибаться вообще. В зависимости
+                            от модели датчик может быть линейным боковым,
+                            конвексным боковым, фазированным с прямым обзором.
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Биопсийный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Встречается в продаже не так часто, 
+                            потому что их довольно сложно 
+                            дезинфицировать + они имеют особую форму линз,
+                            кристаллов и корпуса. Поэтому вместо 
+                            биопсийного датчика чаще всего приобретают биопсийные насадки.
+                        </Paragraph>
+                    </Section>
+
+                    <Section>
+                        <Paragraph>
+                            <Italic>Высокоплотный датчик</Italic>
+                        </Paragraph>
+
+                        <Paragraph>
+                            Конвексные и линейные датчики стандартной плотности имеют 
+                            128 элементов, аналогичные датчики высокой плотности – 192 элемента.
+                        </Paragraph>
+
+                    </Section>
+
+                    <Section>
+                        <BlockUIContainer>
+                            <Border Style="{StaticResource BorderTipDanger}"  Width="400">
+
+
+                                <TextBlock TextWrapping="Wrap" Grid.Column="1">
+                                        Для стандартных исследований
+                                        достаточно будет 2 или 3 датчиков. 
+                                        Однако специализированные требуют 
+                                        около 5 или даже 6 датчиков.
+                                </TextBlock>
+
+                            </Border>
+                        </BlockUIContainer>
+                    </Section>
+
+                    <Paragraph LineHeight="20"/>
+
+                </FlowDocument>
+            </RichTextBox>
+        </ScrollViewer>
+
+        <!--Производитель-->
+
+        <ScrollViewer
+            Margin="4,4,4,4"
+            Grid.Column="2"
+            VerticalScrollBarVisibility="Auto"
+                 Visibility="{Binding 
+                 ElementName=ManufactureTreeItem, 
+                 Path=IsSelected,
+                 UpdateSourceTrigger=PropertyChanged,
+                 Converter={StaticResource BoolToVisible}}">
+            <RichTextBox IsReadOnly="True">
+
+                <FlowDocument>
+                    <Section BreakPageBefore="True">
+                        <Paragraph FontSize="20">
+                            <Bold>Производитель</Bold>
+                        </Paragraph>
+                    </Section>
+
+                    <Paragraph>
+                        <Italic>Aloka</Italic> (на сегодняшний день Hitachi) – 
+			японский производитель. УЗ-аппараты от этого 
+			производителя обладают эргономичным дизайном. Они 
+			просты в обслуживании и отличаются 
+			своей универсальностью.
+                    </Paragraph>
+
+                    <Paragraph>
+                        <Italic>Alpinion</Italic> – корейский производитель аппаратов. Гарантирует 
+			высокое качество визуализации за приемлемую 
+			цену.
+                    </Paragraph>
+
+
+                    <Paragraph>
+                        <Italic>Chison</Italic> – китайский производитель. Техника от 
+			Chison также отличается своей небольшой 
+			стоимостью и вполне приемлемыми характеристиками. 
+			Не первый год находится на 
+			российском рынке.
+                    </Paragraph>
+
+                    <Paragraph>
+                        <Italic>Esaote</Italic> – итальянская компания. УЗ-аппараты данной 
+			компании сочетают в себе простоту 
+			использования и современные технологии.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>Fujifilm</Italic> (Hitachi) – японский производитель. Занимается 
+			производством самых надежных и современных 
+			УЗ-аппаратов в мире.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>GE</Italic> Healthcare – американская фирма, лидер 
+			по производству УЗ-аппаратов. Данный производитель 
+			гарантирует качественное изображение и наличие 
+			многих функций. Техника создается с 
+			применением инновационных технологий.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>MINDRAY</Italic> – фирма китайского происхождения, которая 
+			также занимает лидирующие позиции по 
+			продаже УЗ-аппаратов. Она вкладывает в 
+			свою продукцию большое количество функций 
+			и современные программы по диагностике.
+
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>Philips</Italic> – производитель, осуществляющий свою деятельность 
+			в Нидерландах. Гарантирует качественное изображение 
+			и стабильную работу аппарата на 
+			протяжении многих лет. Производитель позаботился 
+			о том, чтобы его продукция 
+			обладала инновационными функциями и выгодной 
+			ценой.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>Samsung</Italic> – корейский производитель. Активно наращивает 
+			производство в течение нескольких лет. 
+			Недавно компания совершила мощный рывок 
+			в области УЗ-диагностики. Техника, произведенная 
+			компанией Samsung, отличается современным программным 
+			обеспечением, высокими характеристиками и надежностью 
+			в эксплуатации.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>Siemens</Italic> – немецкий производитель. Занимается производством 
+			УЗ-аппаратов, которые надежны, доступны по 
+			цене, а также просты в 
+			повседневном обслуживании.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>SIUI</Italic> – китайский производитель. Поставляет технику 
+			с высоким качеством визуализации по 
+			приемлемой стоимости.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>SONOSCAPE</Italic> – китайский производитель. Создает аппараты, 
+			относящиеся к разным классам.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>SUPERSONIC</Italic> – французская компания. Аппараты от 
+			этого производителя отличаются своими инновационными 
+			разработками и высоким качеством работы.
+
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>Toshiba</Italic> (на сегодняшний день Canon) – 
+			японская компания. Техника, произведенная на 
+			заводах данной компании, представляет собой 
+			сочетание надежности, высокой производительности и 
+			отличной цены.
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>БИОСС</Italic> – отечественный производитель. Аппараты от 
+			БИОСС сочетают в себе универсальность, 
+			надежность, удобство и доступную цену. 
+			Благодаря этим факторам данные аппараты 
+			успешно конкурируют с западными аналогами 
+			в клиниках России и СНГ.
+
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>BK</Italic> MEDICAL – датская компания. Особое 
+			внимание уделяет УЗ-аппаратам, которые используются 
+			в хирургии, ортопедии и кардиологии.
+
+                    </Paragraph>
+                    <Paragraph>
+                        <Italic>РУСКАН</Italic> – отечественная компания, занимающаяся производством 
+			УЗ-аппаратов. Использует собственные технологии совместно 
+			с технологиями компании Samsung Medison.
+
+                    </Paragraph>
+
+
+
+                    <Section>
+                        <BlockUIContainer>
+                            <Border Style="{StaticResource BorderTipDanger}"   Width="400">
+                               
+                                    <TextBlock TextWrapping="Wrap" Grid.Column="1">
+                                        Есть так называемая большая пятерка
+                                        производителей, которая выпускает качественные и 
+                                        надежные аппараты. 
+                                        К ней относится: Fujifilm (Hitachi) (бывш. Aloka), 
+                                        Canon (бывш. Toshiba), GE, Philips, Siemens.
+                                    </TextBlock>
+                                
+                            </Border>
+                        </BlockUIContainer>
+                    </Section>
+
+                    <Paragraph LineHeight="20"/>
+                </FlowDocument>
+            </RichTextBox>
+        </ScrollViewer>
+
+        <!--Стоимость-->
+        <ScrollViewer
+            Margin="4,4,4,4"
+            Grid.Column="2"
+            VerticalScrollBarVisibility="Auto"
+                 Visibility="{Binding 
+                 ElementName=CostTreeItem, 
+                 Path=IsSelected,
+                 UpdateSourceTrigger=PropertyChanged,
+                 Converter={StaticResource BoolToVisible}}">
+
+            <RichTextBox IsReadOnly="True">
+                <FlowDocument>
+                    <Section BreakPageBefore="True">
+                        <Paragraph FontSize="20">
+                            <Bold>Стоимость</Bold>
+                        </Paragraph>
+                    </Section>
+                    <Paragraph>
+                        Стоимость УЗ-аппарата способна постоянно меняться в 
+			            зависимости от курса валюты и 
+			            от различной комплектации. Однако по 
+			            стоимости, как и по классам, 
+			            аппараты можно разделить на пять 
+			            категорий.
+                    </Paragraph>
+
+                    <List MarkerStyle="Decimal">
+                        <ListItem Margin="3">
+                            <Paragraph TextIndent="5">
+                                До 800 тысяч рублей. За эту стоимость можно приобрести УЗ-аппарат базового или среднего класса. Его нельзя будет назвать многопрофильным, однако основные важные функции иметь он будет.
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem Margin="3">
+                            <Paragraph TextIndent="5">
+                                Аппараты за такую стоимость предлагают только китайские производители, например, CHISON. Можно также приобрести модель китайской сборки, однако, по функционалу она будет уступать. Стоит остерегаться подделок и непроверенных производителей.
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem Margin="3">
+                            <Paragraph TextIndent="5">
+                                От 800 тысяч рублей и до 1,5 миллиона рублей. Этой стоимостью обладают УЗ-аппараты среднего или высокого класса. Желательно за такую цену приобретать новые модели, а не б/у, поскольку их функционал вполне может устареть за долгое время.
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem Margin="3">
+                            <Paragraph TextIndent="5">
+                                От 1,5 миллиона рублей до 2 миллионов рублей. Приобретая аппарат, который находится в этом ценовом сегменте, следует помнить, что качество не всегда соответствует цене. На данный момент существует много китайских производителей, которые готовы предложить продукт низкого качества за такую стоимость. Лучше приобрести аппарат среднего класса у проверенного производителя, который долгие годы является лидером на рынке, чем купить китайскую модель высокого класса, которая прослужит от силы год или два.
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem Margin="3">
+                            <Paragraph TextIndent="5">
+                                От 2 миллионов рублей до 3 миллионов рублей В этом сегменте представлены УЗ-аппараты высокого уровня.  За такую цену аппарат должен работать весь рабочий день как часы. Не обращайте внимания на китайских производителей, которые заявляют, что они готовы предложить аппарат «экспертного» класса за такую небольшую цену. В крайнем случае за подобную стоимость лучше приобрести восстановленные аппараты премиум класса.
+                            </Paragraph>
+                        </ListItem>
+
+                        <ListItem Margin="3">
+                            <Paragraph TextIndent="5">
+                                Свыше 3 миллионов рублей Здесь находятся аппараты премиум и экспертного класса.  При выборе следует четко понимать, необходим ли в ЛПУ вообще такой УЗ-аппарат.  Основная рекомендация в этом сегменте - покупать аппарат у известных и давно существующих производителей с передовыми разработками в сфере УЗИ.
+                            </Paragraph>
+                        </ListItem>
+                    </List>
+
+
+                </FlowDocument>
+
+
+
+            </RichTextBox>
+        </ScrollViewer>
+
+
+        <!--Гарантия-->
+        <RichTextBox Grid.Column="1"
+                 
+                 Visibility="{Binding 
+                 ElementName=GuaranteeTreeItem, 
+                 Path=IsSelected,
+                 UpdateSourceTrigger=PropertyChanged,
+                 Converter={StaticResource BoolToVisible}}" Grid.ColumnSpan="2" Margin="4"
+                 >
+
+            <FlowDocument>
+                <Section BreakPageBefore="True">
+                    <Paragraph FontSize="20">
+                        <Bold>Гарантия</Bold>
+                    </Paragraph>
+                </Section>
+
+                <Paragraph>
+                    На рынке УЗИ в России гарантийные
+                    сроки варьируются от 1 до 3 лет.
+                    Гарантия больше 1 года используется 
+                    в основном для низкобюджетных аппаратов 
+                    китайского производства или аппаратов китайской 
+                    сборки исключительно с маркетинговой целью.  
+                    Основные западные марки для своих моделей высокого и 
+                    тем более экспертного класса гарантию больше 1
+                    года не выдают.
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+
+
     </Grid>
 </Page>

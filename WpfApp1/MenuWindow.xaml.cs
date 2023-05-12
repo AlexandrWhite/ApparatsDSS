@@ -34,5 +34,17 @@ namespace WpfApp1
             //Content = mw.Content;
             //mw.DataContext = new FilterVM();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new System.Uri("RecomendationPage.xaml", UriKind.RelativeOrAbsolute));
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new System.Uri("HelpPage.xaml", UriKind.RelativeOrAbsolute));
+        }
     }
 }

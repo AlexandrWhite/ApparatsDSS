@@ -19,12 +19,13 @@
             </LinearGradientBrush>
         </Grid.Background>-->
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+      
 
-        <StackPanel VerticalAlignment="Top" Margin="20">
+        <UniformGrid VerticalAlignment="Top" Margin="20" Grid.Row="1">
             <Button Style="{StaticResource ButtonCustom}" 
                     Height="35"
                     hc:BorderElement.CornerRadius="4"
@@ -54,7 +55,7 @@
                     BorderBrush="#B199C6"
                     BorderThickness="1"
                     Background="#e9cfff"
-                    Content="Справка" Margin="2"/>
+                    Content="Справка" Margin="2" Click="Button_Click_2"/>
 
             <Button Style="{StaticResource ButtonCustom}" 
                     Height="35"
@@ -64,10 +65,10 @@
                     Background="#e9cfff"
                     BorderBrush="#B199C6"
                     BorderThickness="1"
-                    Content="Рекомендации по выбору" Margin="2"/>
+                    Content="Рекомендации по выбору" Margin="2" Click="Button_Click_1"/>
 
 
-        </StackPanel>
+        </UniformGrid>
 
         <TextBlock Text="Автор: Полина Новохатская. 2023 год" 
                    VerticalAlignment="Bottom" 
@@ -81,16 +82,10 @@
 
 
             <StackPanel VerticalAlignment="Bottom">
-                <Border
-            
+                <Border           
                 Background="#66000000"
-                
                 VerticalAlignment="Bottom"
                 >
-
-
-
-
                     <TextBlock 
                     VerticalAlignment="Bottom"
                         
@@ -100,7 +95,7 @@
                         TextWrapping="WrapWithOverflow"
                         
                         FontSize="40"
-                        Text="Система поддержки принятия решений выбора оптимальной модели УЗ-апррата" />
+                        Text="Система поддержки принятия решений для выбора оптимальной модели УЗ-аппарата" />
 
                 </Border>
             </StackPanel>
