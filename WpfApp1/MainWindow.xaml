@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp1"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:valid ="clr-namespace:WpfApp1.ValidationRules"
-        
+        d:Width="800" d:Height="1600"
         mc:Ignorable="d"
         Title="СППР">
 
@@ -48,7 +48,7 @@
                     Style="{StaticResource InputElementBaseStyle}"
                     
                     
-                    Margin="0,2,0,0">
+                    Margin="0,2,0,0" IsExpanded="True">
 
                     <Expander.Header>
                         Области применения
@@ -88,10 +88,10 @@
 
                         <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
   
-                            <RadioButton Content="{Binding Constructions[0].Key}" 
+                            <ToggleButton Content="{Binding Constructions[0].Key}" 
                                          IsChecked="{Binding Constructions[0].Value, 
                                          Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RadioButton Content="{Binding Constructions[1].Key}" 
+                        <ToggleButton Content="{Binding Constructions[1].Key}" 
                                      IsChecked="{Binding Constructions[1].Value, Mode=TwoWay}"/>
                         </hc:ButtonGroup>
 
@@ -193,11 +193,14 @@
                 <Expander Header="Набор датчиков"
                           Style="{StaticResource InputElementBaseStyle}"
                           Margin="0,2,0,0">
-                    <local:SearchAndCheckboxControl 
+                    <StackPanel>
+                    <local:SearchAndCheckboxControl
+                        
                         Width="268"
-                        SearchData="{Binding SensorsData}"
+                        SearchData="{Binding SensorsData, UpdateSourceTrigger=PropertyChanged}"
                         SearchTooltipText="Поиск по датчикам"/>
-
+                   
+                    </StackPanel>
 
 
                 </Expander>
@@ -208,8 +211,8 @@
                     <ItemsControl
                          
                         ItemsSource="{Binding Countries,
-                        Mode=TwoWay,
-                        UpdateSourceTrigger=PropertyChanged}">
+                        Mode=OneWay}"
+                        >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox HorizontalAlignment="Left"
@@ -266,14 +269,17 @@
            
         </DataGrid>-->
 
-        <TextBlock Text="{Binding Res, UpdateSourceTrigger=PropertyChanged, IsAsync=True}" Grid.Column="1"/>
-        <!--<DataGrid Grid.Column="1" IsReadOnly="True" AutoGenerateColumns="True" ItemsSource="{Binding TestData}" CanUserAddRows="False" ColumnWidth="*">
-            --><!--<DataGrid.Columns>
-                <DataGridTextColumn Header="Название Аппарата" Binding="{Binding Key}"/>
-                <DataGridTextColumn Header="Цена" Binding="{Binding Value}"/>
+       
+        <DataGrid Grid.Column="1" IsReadOnly="True" 
+                  AutoGenerateColumns="True" 
+                  ItemsSource="{Binding TestData, UpdateSourceTrigger=PropertyChanged}"
+                  CanUserAddRows="False" 
+                 
+                  
+                 
+                  ColumnWidth="*"/>
 
-            </DataGrid.Columns>--><!--
-        </DataGrid>-->
+        <!--<TextBlock Text="{Binding Res, UpdateSourceTrigger=PropertyChanged, IsAsync=True}" Grid.Column="1"/>-->
 
     </Grid>
 </Page>

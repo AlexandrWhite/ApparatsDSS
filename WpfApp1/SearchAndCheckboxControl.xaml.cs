@@ -56,9 +56,9 @@ namespace WpfApp1
             set { SetValue(SearchTooltipTextProperty, value); }
         }
 
-        public ObservableCollection<MyPair<string, bool>> SearchData
+        public List<MyPair<string, bool>> SearchData
         {
-            get { return (ObservableCollection<MyPair<string, bool>>)GetValue(SearchDataProperty); }
+            get { return (List<MyPair<string, bool>>)GetValue(SearchDataProperty); }
             set { SetValue(SearchDataProperty, value); }
         }
 
@@ -83,8 +83,8 @@ namespace WpfApp1
                 ));
 
         public static readonly DependencyProperty SearchDataProperty =
-            DependencyProperty.Register("SearchData", typeof(ObservableCollection<MyPair<string, bool>>), 
-            typeof(SearchAndCheckboxControl), new FrameworkPropertyMetadata(new ObservableCollection<MyPair<string,bool>>(),
+            DependencyProperty.Register("SearchData", typeof(List<MyPair<string, bool>>), 
+            typeof(SearchAndCheckboxControl), new FrameworkPropertyMetadata(new List<MyPair<string,bool>>(),
                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                 new PropertyChangedCallback(OnTextChanged), new CoerceValueCallback(CoerceText)));
 

@@ -46,5 +46,11 @@ namespace WpfApp1
             NavigationService ns = NavigationService.GetNavigationService(this);
             ns.Navigate(new System.Uri("HelpPage.xaml", UriKind.RelativeOrAbsolute));
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            AssemblyWindow aw = new AssemblyWindow();
+            aw.Show();
+        }
     }
 }

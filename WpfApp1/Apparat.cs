@@ -3,64 +3,55 @@ using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfApp1
 {
+    [BsonIgnoreExtraElements]
     class Apparat
-    {
-        [BsonId]
-        public ObjectId Id { get; set; }
-
+    {    
+          
         [BsonElement("Название аппарата")]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [BsonElement("Цена (руб)")]
-        public int? price { get; set; }
-
-        [BsonElement("Гарантийный срок")]
-        public int? garantee { get; set; }
-
-        [BsonElement("Конструктивное исполнение")]
-        public string construction { get; set; }
-
-        [BsonElement("Области применения")]
-        public List<string> usingFields { get; }
-
-        [BsonElement("Пакеты специализированных программ")]
-        public List<string> haveSpecialProgramms { get; }
-
-        [BsonElement("Набор ультразвуковых датчиков")]
-        public List<string> UltraSoundDevices { get; }
-
-        [BsonElement("Руководство по эксплуатации на русском")]
-        public bool haveRussInstruction { get; }
-
-        [BsonElement("Масса (кг)")]
-        public int mass { get; }
-
-        [BsonElement("Диагональ ЖК-монитора (в дюймах)")]
-        public int? diag { get; }
+        public int? Price { get; set; }
 
         [BsonElement("Страна производства")]
-        public string country { get; }
+        public string Country { get; set; }
 
-        [BsonElement("Производитель")]
-        public string manufacture { get; }
+        [BsonElement("Конструктивное исполнение")]
+        public string Construction { get; set; }
 
-        [BsonElement("Минимальная ширина (см)")]
-        public int? minimalWidth { get; }
+        
+        [BsonElement("Набор ультразвуковых датчиков")]
+        private List<string> ultraSound { get; set; }
 
-        [BsonElement("Минимальная высота (см)")]
-        public int? minimalHeight { get; }
+        public string UltraSound 
+        {
+            get
+            {
+                if (ultraSound == null){
+                    Console.WriteLine(Name);
+                    return "";
 
-        [BsonElement("Максимальная ширина (см)")]
-        public int? maximalWidth { get; }
+                }
+                return String.Join(',', ultraSound);
+            }           
+        }
 
-        [BsonElement("Максимальная высота (см)")]
-        public int? maximalHeight { get; }
 
+        [BsonElement("Области применения")]
+        private List<string> usingFields { get; set; }
+        public string UsingFields
+        {
+            get
+            {
+                return String.Join(',', usingFields);
+            }
+        }
 
     }
 }

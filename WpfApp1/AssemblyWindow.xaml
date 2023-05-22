@@ -19,22 +19,305 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            
         </Grid.RowDefinitions>
 
-        <ListBox>
-            <ListBoxItem Content="asdad"/>
-            <ListBoxItem Content="asdad"/>
-            <ListBoxItem Content="asdad"/>
-            <ListBoxItem Content="asdad"/>
-            
-            <ListBoxItem>
-                <Expander HorizontalAlignment="Stretch">
+
+        <hc:ScrollViewer>
+            <StackPanel>
+
+                <StackPanel.Resources>
+                    <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
+                        <Setter Property="Margin" Value="5"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
                     <Expander.Header>
-                        asdas
-                    </Expander.Header>
+                        <UniformGrid
+                              
+                              Width="{Binding
+                              RelativeSource={RelativeSource
+                              Mode=FindAncestor,
+                              AncestorType={x:Type Expander}},
+                              Path=ActualWidth}"
+                            HorizontalAlignment="Stretch" Rows="1">
+                            
+                            
+
+                            <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="Acuson S2000" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Text="6 000 000 руб" Margin="15,0,0,0"/>
+                            <hc:NumericUpDown Value="1" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Margin="15,0,0,0" Text="6 000 000 руб"/>
+                            <Button 
+                                Margin="15,0,0,0"
+                                Style="{StaticResource ButtonIcon}"
+                                hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"/>
+                        </UniformGrid>
+                    </Expander.Header>                   
                 </Expander>
-            </ListBoxItem>
-        </ListBox>
+
+
+
+
+
+
+
+
+
+                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
+                    <Expander.Header>
+                        <UniformGrid
+                              
+                              Width="{Binding
+                              RelativeSource={RelativeSource
+                              Mode=FindAncestor,
+                              AncestorType={x:Type Expander}},
+                              Path=ActualWidth}"
+                            HorizontalAlignment="Stretch" Rows="1">
+
+
+
+                            <TextBlock VerticalAlignment="Center" Text="Гель" TextWrapping="Wrap" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Text="200 руб" Margin="15,0,0,0"/>
+                            <hc:NumericUpDown Value="2" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Margin="15,0,0,0" Text="400 руб"/>
+                            <Button 
+                                Margin="15,0,0,0"
+                                Style="{StaticResource ButtonIcon}"
+                                hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"/>
+                        </UniformGrid>
+                    </Expander.Header>
+
+                    <Grid MinWidth="420">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
+
+                        <TextBlock Text="Тип геля" VerticalAlignment="Center"/>
+
+                        <hc:ButtonGroup  Grid.Column="1">
+                            <RadioButton Content="Бесцветный" IsChecked="True"/>
+                            <RadioButton Content="Цветной"/>
+                            <RadioButton Content="Стирильный"/>
+                        </hc:ButtonGroup>
+
+                        <TextBlock Text="Плотность геля" VerticalAlignment="Center" Grid.Row="1" />
+
+                        <hc:ButtonGroup  Grid.Row="1" Grid.Column="1" Margin="0,5,0,0">
+                            <RadioButton Content="Высокая" IsChecked="True"/>
+                            <RadioButton Content="Средняя"/>
+                        </hc:ButtonGroup>
+
+
+                        <TextBlock Text="Плотность геля" VerticalAlignment="Center" Grid.Row="2" Margin="0,5,0,0" />
+
+                        <ComboBox  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0">
+                            <ComboBoxItem Content="0.25" IsSelected="True"/>
+                            <ComboBoxItem Content="1" />
+                            <ComboBoxItem Content="5" />
+                        </ComboBox>
+
+
+                    </Grid>
+
+                </Expander>
+
+                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
+                    <Expander.Header>
+                        <UniformGrid
+                              
+                              Width="{Binding
+                              RelativeSource={RelativeSource
+                              Mode=FindAncestor,
+                              AncestorType={x:Type Expander}},
+                              Path=ActualWidth}"
+                            HorizontalAlignment="Stretch" Rows="1">
+
+
+
+                            <TextBlock VerticalAlignment="Center" Text="Бак медицинских отходов" TextWrapping="Wrap" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Text="500 руб" Margin="15,0,0,0"/>
+                            <hc:NumericUpDown Value="1" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Margin="15,0,0,0" Text="500 руб"/>
+                            <Button 
+                                Margin="15,0,0,0"
+                                Style="{StaticResource ButtonIcon}"
+                                hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"/>
+                        </UniformGrid>
+                    </Expander.Header>
+
+                    <Grid MinWidth="420">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
+
+                        <TextBlock Text="Класс отходов" VerticalAlignment="Center"/>
+
+                        <hc:ButtonGroup  Grid.Column="1">
+                            <RadioButton Content="Класс А" IsChecked="True"/>
+                            <RadioButton Content="Класс Б"/>
+                            <RadioButton Content="Класс В"/>
+                        </hc:ButtonGroup>
+
+                        <TextBlock Text="Конструкция бака" VerticalAlignment="Center" Grid.Row="1" />
+
+                        <hc:ButtonGroup  Grid.Row="1" Grid.Column="1" Margin="0,5,0,0">
+                            <RadioButton Content="С педалью"/>
+                            <RadioButton Content="Без педали" IsChecked="True"/>
+                        </hc:ButtonGroup>
+
+
+                        <TextBlock Text="Вместимость (литр)" VerticalAlignment="Center" Grid.Row="2" Margin="0,5,0,0" />
+
+                        <ComboBox  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0">
+                            <ComboBoxItem Content="12" IsSelected="True"/>
+                            <ComboBoxItem Content="20" />
+                            <ComboBoxItem Content="25" />
+                        </ComboBox>
+
+
+                    </Grid>
+
+                </Expander>
+
+
+                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
+                    <Expander.Header>
+                        <UniformGrid
+                              
+                              Width="{Binding
+                              RelativeSource={RelativeSource
+                              Mode=FindAncestor,
+                              AncestorType={x:Type Expander}},
+                              Path=ActualWidth}"
+                            HorizontalAlignment="Stretch" Rows="1">
+
+
+
+                            <TextBlock VerticalAlignment="Center" Text="Фотобумага для принтера" TextWrapping="Wrap" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Text="1300 руб" Margin="15,0,0,0"/>
+                            <hc:NumericUpDown Value="1" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Margin="15,0,0,0" Text="1300 руб"/>
+                            <Button 
+                                Margin="15,0,0,0"
+                                Style="{StaticResource ButtonIcon}"
+                                hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"/>
+                        </UniformGrid>
+                    </Expander.Header>
+
+                    <Grid MinWidth="420">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            
+                        </Grid.RowDefinitions>
+
+                        <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
+
+                     
+
+
+                        <TextBlock Text="Модель принтера" VerticalAlignment="Center" Grid.Row="2" Margin="0,5,0,0" />
+
+                        <ComboBox  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0">
+                            <ComboBoxItem Content="Sony UPP-110S" IsSelected="True"/>
+                            <ComboBoxItem Content="Sony UPP-110HD" />
+                            <ComboBoxItem Content="25" />
+                        </ComboBox>
+
+
+                    </Grid>
+
+                </Expander>
+
+                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
+                    <Expander.Header>
+                        <UniformGrid
+                              
+                              Width="{Binding
+                              RelativeSource={RelativeSource
+                              Mode=FindAncestor,
+                              AncestorType={x:Type Expander}},
+                              Path=ActualWidth}"
+                            HorizontalAlignment="Stretch" Rows="1">
+
+
+
+                            <TextBlock VerticalAlignment="Center" Text="Перчатки" TextWrapping="Wrap" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Text="800 руб" Margin="15,0,0,0"/>
+                            <hc:NumericUpDown Value="2" Margin="15,0,0,0"/>
+                            <TextBlock VerticalAlignment="Center" Margin="15,0,0,0" Text="1600 руб"/>
+                            <Button 
+                                Margin="15,0,0,0"
+                                Style="{StaticResource ButtonIcon}"
+                                hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"/>
+                        </UniformGrid>
+                    </Expander.Header>
+
+                    <Grid MinWidth="420">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
+
+
+
+
+                        <TextBlock Text="Материал" VerticalAlignment="Center" Grid.Row="2" Margin="0,5,0,0" />
+
+                        <ComboBox  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0">
+                            <ComboBoxItem Content="Латекс" IsSelected="True"/>
+                            <ComboBoxItem Content="Винил" />
+                            <ComboBoxItem Content="Хирургические" />
+                        </ComboBox>
+
+
+                    </Grid>
+
+                </Expander>
+
+
+
+
+
+
+            </StackPanel>
+            
+            
+            
+            
+
+        </hc:ScrollViewer>
+
 
 
         <StackPanel Grid.Row="1">
@@ -43,17 +326,35 @@
                         HorizontalAlignment="Right"
                         Margin="5">
                 <TextBlock Text="Итог: " FontSize="30"/>
-                <TextBlock Text="1123" FontSize="30"/>
+                <TextBlock Text="6 003 800" FontSize="30"/>
                 <TextBlock Text=" руб." FontSize="30"/>
+                
             </StackPanel>
                 
             <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+              
                 <Button Grid.Column="0" Content="Добавить предмет"/>
-                <Button Grid.Column="1" Content="Оформить заказ"/>
+                <Button Grid.Column="1" Content="Оформить коммерческое предложение"/>
+                <Button
+                    Grid.Row="1"
+                    
+                    Grid.ColumnSpan="2"
+                    Height="30" Padding="10,0"
+                    Background="#FFD869"
+                    Margin="4"
+                    hc:BorderElement.CornerRadius="4"
+                    hc:BackgroundSwitchElement.MouseHoverBackground="#FFE6A3"
+                    hc:BackgroundSwitchElement.MouseDownBackground="#FFD366"
+                    Content="Вернуться в меню" 
+                    Style="{StaticResource ButtonCustom}"/>
             </Grid>
         </StackPanel>
         

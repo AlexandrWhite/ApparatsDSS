@@ -17,17 +17,19 @@ namespace WpfApp1
 {
     class FilterVM:INotifyPropertyChanged
     {
-        List<string> selected_fields = new List<string>();
-        List<string> selected_countries = new List<string>();
-        List<string> selected_sensors = new List<string>();
+        Dictionary<string, FilterDefinition<Apparat>> filters = new Dictionary<string, FilterDefinition<Apparat>>();
 
-        ApparatModel apm = new ApparatModel();
-
-        ApparatFilterModel apmf = new ApparatFilterModel();
-
-        public IMongoCollection<Apparat> TestData
+        public List<Apparat> TestData
         {
-            get { return apmf.dosmth(); }
+            get 
+            {
+                var mainFilter = Builders<Apparat>.Filter.Empty;
+                foreach (var element in filters)
+                    mainFilter &= element.Value;
+
+                var collection = ApparatDB.MongoClient.GetDatabase("test").GetCollection<Apparat>("apparats").Find(mainFilter).ToList();
+                return collection;
+            }
         }
 
 
@@ -35,13 +37,10 @@ namespace WpfApp1
         {
             //apm.show_apparats();
 
-        
-           
-
             foreach (var element in using_fields_data)             
                 element.PropertyChanged += FieldsElementPropertyChanged;
-           
-            foreach(var element in countries_data)
+
+            foreach (var element in countries_data)
                 element.PropertyChanged += CountriesPropertyChanged;
 
             foreach (var element in construction)
@@ -51,50 +50,66 @@ namespace WpfApp1
                 element.PropertyChanged += Sensors_PropertyChanged;
 
         }
-
-
-        public ObservableCollection<MyPair<string,bool>> Apparats
-        {
-            get 
-            {
-                return countries_data;
-            }
-        }
+                
 
         private void Sensors_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            MyPair<string, bool> element = sender as MyPair<string, bool>;
-            updateSelectedList(element, selected_sensors);
-            OnPropertyChanged(nameof(Res));
+            var selected_sensors = sensors_data.FindAll(item => item.Value == true).Select(item => item.Key).ToList();
+            var filter = Builders<Apparat>.Filter.All("Набор ультразвуковых датчиков", selected_sensors);
+
+            
+            if (selected_sensors.Count == 0)
+                filters["Набор ультразвуковых датчиков"] = Builders<Apparat>.Filter.Empty;
+            else
+                filters["Набор ультразвуковых датчиков"] = filter;
+            OnPropertyChanged(nameof(TestData));
         }
 
         private void Constructions_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            OnPropertyChanged(nameof(Res));
+            var selected_constructions = construction.FindAll(item => item.Value == true).Select(item => item.Key)
+                .Select(item => item.ToLower()).ToList();
+
+            foreach(var s in selected_constructions)
+            {
+                Console.WriteLine(s);
+            }
+
+            var filter = Builders<Apparat>.Filter.In("Конструктивное исполнение", selected_constructions);
+            if (selected_constructions.Count == 0)
+                filters["Конструктивное исполнение"] = Builders<Apparat>.Filter.Empty;
+            else
+                filters["Конструктивное исполнение"] = filter;
+            OnPropertyChanged(nameof(TestData));
         }
 
 
-        private void updateSelectedList(MyPair<string, bool> element,List<string> selected_list)
-        {
-            
-            if (element.Value && selected_list.Find(s => s == element.Key) is null)
-                selected_list.Add(element.Key);
-            else if (element.Value == false)
-                selected_list.Remove(element.Key);
-        }
-
+        
         private void CountriesPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {         
-            MyPair<string, bool> element = sender as MyPair<string, bool>;
-            updateSelectedList(element, selected_countries);
-            OnPropertyChanged(nameof(Res));
+        {
+            var selected_countries = Countries.FindAll(item => item.Value == true).Select(item => item.Key).ToList();
+            var filter = Builders<Apparat>.Filter.In("Страна производства", selected_countries);
+
+            if (selected_countries.Count == 0)
+                filters["Страна производства"] = Builders<Apparat>.Filter.Empty;
+            else
+                filters["Страна производства"] = filter;
+
+            OnPropertyChanged(nameof(TestData));  
         }
 
         private void FieldsElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            MyPair<string, bool> element = sender as MyPair<string, bool>;
-            updateSelectedList(element, selected_fields);
-            OnPropertyChanged(nameof(Res));
+            var selected_fields = using_fields_data.FindAll(item => item.Value == true).Select(item => item.Key).ToList();
+            var filter = Builders<Apparat>.Filter.All("Области применения", selected_fields);
+
+
+            if (selected_fields.Count == 0)
+                filters["Области применения"] = Builders<Apparat>.Filter.Empty;
+            else
+                filters["Области применения"] = filter;
+            OnPropertyChanged(nameof(TestData));
+
         }     
 
         //float monitor_diag;
@@ -142,7 +157,7 @@ namespace WpfApp1
 
 
 
-        private ObservableCollection<MyPair<string, bool>> using_fields_data = new ObservableCollection<MyPair<string, bool>>() 
+        private List<MyPair<string, bool>> using_fields_data = new List<MyPair<string, bool>>() 
         {
             new MyPair<string, bool>( "Абдоминальные исследования", false),
             new MyPair<string, bool>( "Акушерство и гинекология", false),
@@ -187,14 +202,28 @@ namespace WpfApp1
             new MyPair<string, bool>( "Эхокардиография", false)
         };
 
-        public ObservableCollection<MyPair<string, bool>> UsingFieldsData
+        private List<MyPair<string, bool>> countries_data = new List<MyPair<string, bool>>()
+        {
+            new MyPair<string, bool>( "Германия", false),
+            new MyPair<string, bool>( "Дания", false),
+            new MyPair<string, bool>( "Италия", false),
+            new MyPair<string, bool>( "Китай", false),
+            new MyPair<string, bool>( "Нидерланды", false),
+            new MyPair<string, bool>( "Республика Корея", false),
+            new MyPair<string, bool>( "Россия", false),
+            new MyPair<string, bool>( "США", false),
+            new MyPair<string, bool>( "Франция", false),
+            new MyPair<string, bool>( "Япония", false)
+        };
+
+        public List<MyPair<string, bool>> UsingFieldsData
         {
             get { return using_fields_data; }
         }
 
       
 
-        private ObservableCollection<MyPair<string, bool>> sensors_data = new ObservableCollection<MyPair<string, bool>>()
+        private List<MyPair<string, bool>> sensors_data = new List<MyPair<string, bool>>()
         {
             new MyPair<string, bool>("Биопсийный",false),
             new MyPair<string, bool>("Биплановый",false),
@@ -202,7 +231,7 @@ namespace WpfApp1
 
             new MyPair<string, bool>("Высокоплотный",false),
             new MyPair<string, bool>("Доплеровский",false),
-            new MyPair<string, bool>("Интераоперационный",false),
+            new MyPair<string, bool>("Интраоперационный",false),
 
             new MyPair<string, bool>("Карандашный",false),
             new MyPair<string, bool>("Конвексный",false),
@@ -220,37 +249,21 @@ namespace WpfApp1
             new MyPair<string, bool>("Чреспищеводный",false)          
         };
 
-        public ObservableCollection<MyPair<string, bool>> SensorsData
+        public List<MyPair<string, bool>> SensorsData
         {
             get { return sensors_data; }
         }
 
 
         
-        private ObservableCollection<MyPair<string, bool>> countries_data = new ObservableCollection<MyPair<string, bool>>()
-        {
-            new MyPair<string, bool>( "Германия", false),
-            new MyPair<string, bool>( "Дания", false),
-            new MyPair<string, bool>( "Италия", false),
-            new MyPair<string, bool>( "Китай", false),
-            new MyPair<string, bool>( "Нидерланды", false),
-            new MyPair<string, bool>( "Республика Корея", false),
-            new MyPair<string, bool>( "Россия", false),
-            new MyPair<string, bool>( "США", false),
-            new MyPair<string, bool>( "Франция", false),
-            new MyPair<string, bool>( "Япония", false)
-        }; 
+       
 
-        public ObservableCollection<MyPair<string,bool>> Countries
+        public List<MyPair<string,bool>> Countries
         {
             get
             {
                 return countries_data;
-            }
-            set
-            {
-                countries_data = value;
-            }
+            }           
         }
 
 
@@ -285,6 +298,7 @@ namespace WpfApp1
 
         List<string> apparatClasses = new List<string>()
         {
+            "Любой",
             "Базовый",
             "Средний",
             "Высокий",
@@ -295,7 +309,7 @@ namespace WpfApp1
 
         List<MyPair<string,bool>> construction = new List<MyPair<string,bool>>()
         {
-             new MyPair<string, bool>( "Стационарный", true),
+             new MyPair<string, bool>( "Стационарный", false),
              new MyPair<string, bool>( "Портативный", false)
         };
 
@@ -315,27 +329,27 @@ namespace WpfApp1
             }
         }
 
-
+      
         public string Res
         {
             get {
                 
                 string res = "";
-                res = "Области применения:\n";
-                foreach(string field in selected_fields)
-                {
-                    res += field + "\n";
-                }
+                //res = "Области применения:\n";
+                //foreach(string field in selected_fields)
+                //{
+                //    res += field + "\n";
+                //}
 
                 res += "\n";
 
 
 
-                res += "Набор датчиков:\n";
-                foreach (string sensor in selected_sensors)
-                {
-                    res += sensor + "\n";
-                }
+                //res += "Набор датчиков:\n";
+                //foreach (string sensor in selected_sensors)
+                //{
+                //    res += sensor + "\n";
+                //}
 
                 res += "\n";
 
@@ -356,12 +370,12 @@ namespace WpfApp1
                 res += prices[selected_price_index] + "\n";
                 res += "\n";
 
-                res += "Страны:\n";
-                foreach (string country in selected_countries)
-                {
-                    res += country + "\n";
-                }
-                res += "\n";
+                //res += "Страны:\n";
+                //foreach (string country in selected_countries)
+                //{
+                //    res += country + "\n";
+                //}
+                //res += "\n";
 
                 res += "Конструкционное исполнение:\n";
                 foreach (MyPair<string,bool> constr in Constructions)

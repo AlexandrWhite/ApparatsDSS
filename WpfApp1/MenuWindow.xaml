@@ -46,7 +46,7 @@
                     hc:BackgroundSwitchElement.MouseHoverBackground="#B0BDF4"
                     BorderBrush="#B199C6"
                     BorderThickness="1"
-                    Content="Создание сборки" Margin="2"/>
+                    Content="Создание сборки" Margin="2" Click="Button_Click_3"/>
             <Button Style="{StaticResource ButtonCustom}" 
                     Height="35"
                     hc:BorderElement.CornerRadius="4"
