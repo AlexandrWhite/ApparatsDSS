@@ -113,7 +113,7 @@
                             MaxWidth="150"
                             Margin="2">
                             <TextBox.Text>
-                                <Binding Path="MinWidth" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Width" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
                                         <valid:FloatInputValidationRule/>
                                     </Binding.ValidationRules>
@@ -239,8 +239,8 @@
                           Margin="0,2,0,0">
                     <hc:ButtonGroup Margin="4" 
                                     Style="{StaticResource ButtonGroupSolid}">
-                        <RadioButton Content="Есть" IsChecked="{Binding HaveRusInstruction, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <RadioButton Content="Нет"/>
+                        <RadioButton Content="Есть" IsChecked="{Binding HaveRusInstruction, UpdateSourceTrigger=PropertyChanged}"/>
+                        <RadioButton Content="Не важно"/>
                     </hc:ButtonGroup>
                 </Expander>
 
@@ -269,8 +269,20 @@
            
         </DataGrid>-->
 
-       
-        <DataGrid Grid.Column="1" IsReadOnly="True" 
+        <Grid  Grid.Column="1" Margin="5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="3">
+            <TextBlock Text="По вашему запросу найдено "/>
+                <TextBlock Text="{Binding TestData.Count}"/>
+                <TextBlock Text=" аппаратов"/>
+            </StackPanel>
+           
+            <DataGrid Grid.Row="1" IsReadOnly="True" 
                   AutoGenerateColumns="True" 
                   ItemsSource="{Binding TestData, UpdateSourceTrigger=PropertyChanged}"
                   CanUserAddRows="False" 
@@ -278,7 +290,7 @@
                   
                  
                   ColumnWidth="*"/>
-
+        </Grid>
         <!--<TextBlock Text="{Binding Res, UpdateSourceTrigger=PropertyChanged, IsAsync=True}" Grid.Column="1"/>-->
 
     </Grid>

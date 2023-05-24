@@ -23,6 +23,7 @@ namespace WpfApp1
         {
             get 
             {
+              
                 var mainFilter = Builders<Apparat>.Filter.Empty;
                 foreach (var element in filters)
                     mainFilter &= element.Value;
@@ -113,23 +114,28 @@ namespace WpfApp1
         }     
 
         //float monitor_diag;
-        string monitor_diag="0";
-        public string MonitorDiag
+        int monitor_diag=0;
+        public int MonitorDiag
         {
             get { return monitor_diag; }
             set {
                 monitor_diag = value;
-                OnPropertyChanged(nameof(Res)); }
+                filters["Диагональ ЖК-монитора (в дюймах)"] = Builders<Apparat>.Filter.Lte("Диагональ ЖК-монитора (в дюймах)",
+                    monitor_diag);
+                OnPropertyChanged(nameof(TestData)); }
         }
 
-        string mass = "0";
-        public string Mass
+        int mass = 0;
+        public int Mass
         {
             get { return mass; }
             set
             {
                 mass = value;
-                OnPropertyChanged(nameof(Res));
+                
+                filters["Масса (кг)"] = Builders<Apparat>.Filter.Lte("Масса (кг)", mass);
+                //OnPropertyChanged(nameof(Res));
+                OnPropertyChanged(nameof(TestData));
             }
         }
 
@@ -144,13 +150,16 @@ namespace WpfApp1
         }
 
 
-        string min_width = "0";
-        public string MinWidth
+        string width = "0";
+        public string Width
         {
-            get { return min_width; }
+            get { return width; }
             set
             {
-                min_width = value;
+                width = value;
+
+                
+
                 OnPropertyChanged(nameof(Res));
             }
         }
@@ -276,8 +285,24 @@ namespace WpfApp1
         public int SelectedPriceIndex
         {
             get { return selected_price_index; }
-            set { selected_price_index = value; OnPropertyChanged(nameof(Res)); }
+            set {
+                
+                selected_price_index = value; 
+                if (selected_price_index == 0)
+                    filters["Цена (руб)"] = Builders<Apparat>.Filter.Lte("Цена (руб)", price_ranges[selected_price_index]);
+                else if (selected_price_index == price_ranges.Length) 
+                    filters["Цена (руб)"] = Builders<Apparat>.Filter.Gte("Цена (руб)", price_ranges[selected_price_index-1]);
+                else
+                {
+                    filters["Цена (руб)"] = Builders<Apparat>.Filter.And(Builders<Apparat>.Filter.Lte("Цена (руб)", price_ranges[selected_price_index]),
+                        Builders<Apparat>.Filter.Gte("Цена (руб)", price_ranges[selected_price_index-1]));
+                }
+                OnPropertyChanged(nameof(Res));
+                OnPropertyChanged(nameof(TestData));
+            }
         }
+
+        double[] price_ranges = { 8*1e5, 1.5*1e6, 2*1e6, 3*1e6};
 
         List<string> prices = new List<string>()
         {
@@ -319,13 +344,19 @@ namespace WpfApp1
             set { construction = value; }
         }
 
-        bool have_rus_instruction = true;
+        bool have_rus_instruction = false;
         public bool HaveRusInstruction
         {
             get { return have_rus_instruction; }
-            set { 
+            set {
+                if (value)
+                    filters["Руководство по эксплуатации на русском"] =
+                        Builders<Apparat>.Filter.Eq("Руководство по эксплуатации на русском", value);
+                else
+                    filters["Руководство по эксплуатации на русском"] = Builders<Apparat>.Filter.Empty;
+               
                 have_rus_instruction = value;
-                OnPropertyChanged(nameof(Res));
+                OnPropertyChanged(nameof(TestData));
             }
         }
 
@@ -360,10 +391,10 @@ namespace WpfApp1
 
                 res += "\n";
 
-                res += "\n";
-                res += "Диагональ монитора:\n";
-                res += float.Parse(MonitorDiag).ToString() + "\n";
-                res += "\n";
+                //res += "\n";
+                //res += "Диагональ монитора:\n";
+                //res += float.Parse(MonitorDiag).ToString() + "\n";
+                //res += "\n";
 
                 res += "\n";
                 res += "Цена:\n";
@@ -393,9 +424,9 @@ namespace WpfApp1
 
 
 
-                res += "Масса:\n";
-                res += Double.Parse(Mass).ToString() + "\n";
-                res += "\n";
+                //res += "Масса:\n";
+                //res += Double.Parse(Mass).ToString() + "\n";
+                //res += "\n";
 
                 res += "Высота:\n";
                 res += Double.Parse(MinHeight).ToString() + "\n";
