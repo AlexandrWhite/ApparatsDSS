@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Name ="AssemblyWindow"
+       
         xmlns:hc="https://handyorg.github.io/handycontrol"
         Title="Сборка" Height="490" Width="600">
 
@@ -24,6 +24,10 @@
         </Grid.RowDefinitions>
 
 
+        
+
+
+        <Border CornerRadius="5" BorderThickness="1" BorderBrush="Black" Margin="2">
         <hc:ScrollViewer>
             <StackPanel>
 
@@ -51,6 +55,7 @@
                             <hc:NumericUpDown Value="1" Margin="15,0,0,0"/>
                             <TextBlock VerticalAlignment="Center" Margin="15,0,0,0" Text="6 000 000 руб"/>
                             <Button 
+                                
                                 Style="{StaticResource ButtonIcon}"
                                 hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"/>
                         </UniformGrid>
@@ -65,7 +70,7 @@
 
 
 
-                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
+                    <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2" Padding="5,10,0,10">
                     <Expander.Header>
                         <UniformGrid
                               
@@ -132,7 +137,7 @@
 
                 </Expander>
 
-                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
+                    <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2" Padding="5,10,0,10">
                     <Expander.Header>
                         <UniformGrid
                               
@@ -200,7 +205,7 @@
                 </Expander>
 
 
-                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
+                    <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2" Padding="5,10,0,10">
                     <Expander.Header>
                         <UniformGrid
                               
@@ -318,7 +323,7 @@
 
         </hc:ScrollViewer>
 
-
+        </Border>
 
         <StackPanel Grid.Row="1">
 
@@ -343,7 +348,7 @@
 
                 <Button Content="Добавить предмет" VerticalAlignment="Bottom" Click="Button_Click"/>
                 <Button 
-                    Command="hc:ControlCommands.Close"
+                   
                     
                     Grid.Column="1"
                     Content="Оформить коммерческое предложение"/>
