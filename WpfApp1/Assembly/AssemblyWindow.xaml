@@ -5,21 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
+        Name ="AssemblyWindow"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         Title="Сборка" Height="490" Width="600">
 
-    
+
 
     <Window.DataContext>
         <local:FilterVM/>
     </Window.DataContext>
 
-    <Grid>
+    <Grid x:Name="MainGrid">
 
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
-            
+
         </Grid.RowDefinitions>
 
 
@@ -32,7 +33,7 @@
                     </Style>
                 </StackPanel.Resources>
 
-                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2">
+                <Expander Style="{StaticResource InputElementBaseStyle}" Margin="2" Padding="5,10,0,10">
                     <Expander.Header>
                         <UniformGrid
                               
@@ -42,19 +43,18 @@
                               AncestorType={x:Type Expander}},
                               Path=ActualWidth}"
                             HorizontalAlignment="Stretch" Rows="1">
-                            
-                            
+
+
 
                             <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="Acuson S2000" Margin="15,0,0,0"/>
                             <TextBlock VerticalAlignment="Center" Text="6 000 000 руб" Margin="15,0,0,0"/>
                             <hc:NumericUpDown Value="1" Margin="15,0,0,0"/>
                             <TextBlock VerticalAlignment="Center" Margin="15,0,0,0" Text="6 000 000 руб"/>
                             <Button 
-                                Margin="15,0,0,0"
                                 Style="{StaticResource ButtonIcon}"
                                 hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"/>
                         </UniformGrid>
-                    </Expander.Header>                   
+                    </Expander.Header>
                 </Expander>
 
 
@@ -232,12 +232,12 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition/>
-                            
+
                         </Grid.RowDefinitions>
 
                         <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
 
-                     
+
 
 
                         <TextBlock Text="Модель принтера" VerticalAlignment="Center" Grid.Row="2" Margin="0,5,0,0" />
@@ -311,10 +311,10 @@
 
 
             </StackPanel>
-            
-            
-            
-            
+
+
+
+
 
         </hc:ScrollViewer>
 
@@ -328,9 +328,9 @@
                 <TextBlock Text="Итог: " FontSize="30"/>
                 <TextBlock Text="6 003 800" FontSize="30"/>
                 <TextBlock Text=" руб." FontSize="30"/>
-                
+
             </StackPanel>
-                
+
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -340,9 +340,13 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-              
-                <Button Grid.Column="0" Content="Добавить предмет"/>
-                <Button Grid.Column="1" Content="Оформить коммерческое предложение"/>
+
+                <Button Content="Добавить предмет" VerticalAlignment="Bottom" Click="Button_Click"/>
+                <Button 
+                    Command="hc:ControlCommands.Close"
+                    
+                    Grid.Column="1"
+                    Content="Оформить коммерческое предложение"/>
                 <Button
                     Grid.Row="1"
                     
@@ -357,8 +361,8 @@
                     Style="{StaticResource ButtonCustom}"/>
             </Grid>
         </StackPanel>
-        
-        
+
+
     </Grid>
 
 

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp1.Assembly;
 
 namespace WpfApp1
 {
@@ -22,6 +23,17 @@ namespace WpfApp1
         public AssemblyWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ChoiceProduct cp = new ChoiceProduct();
+            //cp.ShowDialog();
+            MainGrid.Children.Add(cp);
+            Grid.SetRowSpan(cp, 2);
+            //this.AddChild(cp);
+            
+
         }
     }
 }

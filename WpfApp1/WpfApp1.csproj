@@ -12,7 +12,35 @@
     <None Remove="Images\background.jpg" />
     <None Remove="Images\Book24px.png" />
     <None Remove="Images\closed-book-48.png" />
+    <None Remove="Images\duplicate-photo.png" />
+    <None Remove="Images\gel %281%29.png" />
+    <None Remove="Images\gel %282%29.png" />
+
+   
+    <None Remove="Images\membrane %281%29.png" />
+    <None Remove="Images\membrane.png" />
     <None Remove="Images\open-book-48.png" />
+    <None Remove="Images\rubber-gloves.png" />
+    <None Remove="Images\toxic-waste.png" />
+    <None Remove="Images\ultrasound-machine.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\duplicate-photo.png" />
+    <Resource Include="Images\gel (1).png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\gel (2).png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+ 
+    <Resource Include="Images\membrane (1).png" />
+    <Resource Include="Images\membrane.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\rubber-gloves.png" />
+    <Resource Include="Images\toxic-waste.png" />
+    <Resource Include="Images\ultrasound-machine.png" />
   </ItemGroup>
 
   <ItemGroup>

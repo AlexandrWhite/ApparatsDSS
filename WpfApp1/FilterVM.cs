@@ -432,9 +432,9 @@ namespace WpfApp1
                 res += Double.Parse(MinHeight).ToString() + "\n";
                 res += "\n";
 
-                res += "Ширина:\n";
-                res += Double.Parse(MinWidth).ToString() + "\n";
-                res += "\n";
+                //res += "Ширина:\n";
+                //res += Double.Parse(MinWidth).ToString() + "\n";
+                //res += "\n";
 
                 return res;
             }
