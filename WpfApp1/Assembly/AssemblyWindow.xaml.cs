@@ -20,19 +20,16 @@ namespace WpfApp1
     /// </summary>
     public partial class AssemblyWindow : Window
     {
-        ChoiceProduct cp;
+        
         public AssemblyWindow()
         {
             InitializeComponent();
-            cp = new ChoiceProduct();
-            cp.Visibility = Visibility.Collapsed;
-            MainGrid.Children.Add(cp);
-            Grid.SetRowSpan(cp, 2);
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            cp.Visibility = Visibility.Visible;
+            
         }
     }
 }
