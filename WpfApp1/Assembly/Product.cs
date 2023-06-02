@@ -1,17 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace WpfApp1.Assembly
 {
-    class Product
+    class Product:INotifyPropertyChanged
     {
         string name;
-        int conunt;
+        int count = 1;
         int price_unit;
-        int total_price;
+
+        UserControl view;
+
+
+        public Product(string name, int price_unit)
+        {
+            this.name = name;
+            this.price_unit = price_unit;
+            
+        }
+
+        public Product()
+        {
+            
+        }
 
         public string Name
         {
@@ -20,7 +36,8 @@ namespace WpfApp1.Assembly
 
         public int Count
         {
-            get { return conunt; }
+            set { count = value; OnPropertyChanged(nameof(TotalPrice)); }
+            get { return count; }
         }
 
         public int PriceUnit
@@ -28,9 +45,28 @@ namespace WpfApp1.Assembly
             get { return price_unit; }
         }
 
+        public UserControl View 
+        {
+            get
+            {
+                return view;
+            }
+            set
+            {
+                view = value;
+                view.DataContext = this;
+            }
+        }
+
         public int TotalPrice
         {
-            get { return total_price; }
+            get { return count*price_unit; }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

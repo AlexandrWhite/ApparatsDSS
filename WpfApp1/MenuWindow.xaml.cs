@@ -49,8 +49,10 @@ namespace WpfApp1
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            AssemblyWindow aw = new AssemblyWindow();
-            aw.Show();
+            //AssemblyWindow aw = new AssemblyWindow();
+            //aw.Show();
+            NavigationService ns = NavigationService.GetNavigationService(this);
+            ns.Navigate(new System.Uri("Assembly/AssemblyWindow.xaml", UriKind.RelativeOrAbsolute));
         }
     }
 }

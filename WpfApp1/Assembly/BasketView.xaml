@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="WpfApp1.Assembly.BasketView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.Assembly"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d" 
+             Width="450"
+             d:DesignHeight="450" d:DesignWidth="450">
+    <Grid MinWidth="420">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+
+        <TextBlock Text="Класс отходов" VerticalAlignment="Center"/>
+
+        <hc:ButtonGroup  Grid.Column="1">
+            <RadioButton Content="Класс А" IsChecked="True"/>
+            <RadioButton Content="Класс Б"/>
+            <RadioButton Content="Класс В"/>
+        </hc:ButtonGroup>
+
+        <TextBlock Text="Конструкция бака" VerticalAlignment="Center" Grid.Row="1" />
+
+        <hc:ButtonGroup  Grid.Row="1" Grid.Column="1" Margin="0,5,0,0">
+            <RadioButton Content="С педалью"/>
+            <RadioButton Content="Без педали" IsChecked="True"/>
+        </hc:ButtonGroup>
+
+
+        <TextBlock Text="Вместимость (литр)" VerticalAlignment="Center" Grid.Row="2" Margin="0,5,0,0" />
+
+        <ComboBox  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0">
+            <ComboBoxItem Content="12" IsSelected="True"/>
+            <ComboBoxItem Content="20" />
+            <ComboBoxItem Content="25" />
+        </ComboBox>
+
+
+    </Grid>
+</UserControl>

@@ -1,12 +1,14 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using WpfApp1.Assembly;
 
 
@@ -17,9 +19,21 @@ namespace WpfApp1
 
         public RelayCommand<UIElement> ShowCommand { get; private set; }
         public RelayCommand<UIElement> HideCommand { get; private set; }
+        public RelayCommand<string> AddProductCommand { get; private set; }
+        public RelayCommand<Product> RemoveProductCommand { get; private set; }
+
+
+        Random r = new Random();
+        ObservableCollection<Product> products = new ObservableCollection<Product>();
+        
 
         public AssemblyVM()
         {
+
+            //NavigationService ns = NavigationService.GetNavigationService(this);
+            //ns.Navigate(new System.Uri("MenuWindow.xaml", UriKind.RelativeOrAbsolute));
+
+    
             ShowCommand = new RelayCommand<UIElement>((param) =>
             {
                 param.Visibility = Visibility.Visible;
@@ -29,20 +43,89 @@ namespace WpfApp1
             {
                 param.Visibility = Visibility.Collapsed;
             });
+
+            AddProductCommand = new RelayCommand<string>((param) =>
+            {
+                addProduct(param);
+            });
+
+            RemoveProductCommand = new RelayCommand<Product>((param) =>
+            {
+                Console.WriteLine("Remove");
+                Console.WriteLine(param);
+                products.Remove(param);
+                OnPropertyChanged(nameof(param));
+                OnPropertyChanged(nameof(TotalSum));
+            });
+
+
         }
 
 
-        List<Product> products = new List<Product>();
-        decimal total_sum = 0;
+        private void addProduct(string name)
+        {
+            Product p;
+            
+            switch (name)
+            {
+                case "Гель":
+                    p = new GelModel(name, r.Next(1000, 100000));
+                    p.View = new GelView();
+                    break;
 
-        public List<Product> Products
+                case "Перчатки":
+                    p = new GlovesModel(name, r.Next(1000, 100000));
+                    p.View = new GlovesView();
+                    break;
+
+                case "Бак для отходов":
+                    p = new BasketModel(name, r.Next(1000, 100000));
+                    p.View = new BasketView();
+                    break;
+
+                case "Фотобумага":
+                    p = new PhotoModel(name, r.Next(1000, 100000));
+                    p.View = new PhotoView();
+                    break;
+
+                default:
+                    p = new Product(name, r.Next(1000, 100000));
+                    p.PropertyChanged += Product_PropertyChanged;
+                    break;
+                
+            }
+            products.Add(p);
+            
+            OnPropertyChanged(nameof(Products));
+            OnPropertyChanged(nameof(TotalSum));
+        }
+
+        private void Product_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+
+            if (e.PropertyName == "TotalPrice")
+            {
+                Console.WriteLine($"changed {e.PropertyName}");
+                OnPropertyChanged(nameof(TotalSum));
+            }
+            
+        }
+
+        public ObservableCollection<Product> Products
         {
             get { return products; }
         }
 
         public decimal TotalSum
         {
-            get { return total_sum; }
+            get 
+            {
+                decimal sum = 0;
+                foreach(var p in Products)
+                    sum += p.TotalPrice;
+                Console.WriteLine(sum);
+                return sum;
+            }
         }
 
 

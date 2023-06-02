@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfApp1.AssemblyWindow"
+﻿<Page x:Class="WpfApp1.AssemblyWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,15 +7,18 @@
         mc:Ignorable="d"
        
         xmlns:hc="https://handyorg.github.io/handycontrol"
-        Title="Сборка" Height="490" Width="600">
+        Title="Сборка" d:Width="500" d:Height="500">
+    
 
+    
+    
+    
+    
+    <Page.DataContext>
+        <local:AssemblyVM x:Name="mainVM"/>
+    </Page.DataContext>
 
-
-    <Window.DataContext>
-        <local:AssemblyVM/>
-    </Window.DataContext>
-
-    <Grid x:Name="MainGrid" >
+    <Grid x:Name="MainGrid" Background="White">
 
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -27,15 +30,58 @@
 
 
 
-        <Border CornerRadius="5" BorderThickness="1" Margin="5" BorderBrush="{StaticResource BorderBrush}">
+        <Border CornerRadius="5" 
+                BorderThickness="1"
+                Margin="5" BorderBrush="{StaticResource BorderBrush}">
         <hc:ScrollViewer Margin="5">
-            <StackPanel>
 
-                <StackPanel.Resources>
-                    <Style TargetType="Expander" BasedOn="{StaticResource {x:Type Expander}}">
-                        <Setter Property="Margin" Value="5"/>
-                    </Style>
-                </StackPanel.Resources>
+                <ItemsControl Style="{DynamicResource ItemsControlStyle1}" ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}">
+
+                
+
+                    <ItemsControl.ItemTemplate>
+                        
+                        <DataTemplate>
+                            <Expander HeaderTemplate="{DynamicResource ExpanderHeaderTemplate1}"
+                                x:Name="ExpanderProd"
+                                Margin="2"
+                                Content="{Binding View}"
+                                
+                                Style="{StaticResource InputElementBaseStyle}">
+                                <Expander.Header>
+                                    <UniformGrid Rows="1" HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}">                                     
+                                        <TextBlock VerticalAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Name}" Margin="15,0,0,0"/>
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding PriceUnit}" Margin="15,0,0,0"/>
+                                        <hc:NumericUpDown Minimum="0" Value="{Binding Count}" Margin="15,0,0,0"/>
+                                        <TextBlock VerticalAlignment="Center" Margin="15,0,0,0" Text="{Binding TotalPrice}"/>
+                                        <Button HorizontalAlignment="Right"                                     
+                                                Command="{Binding ElementName=mainVM, Path=RemoveProductCommand}"
+                                                CommandParameter="{Binding}"
+                                                Foreground="{DynamicResource DangerBrush}" 
+                                                Style="{StaticResource ButtonIcon}"
+                                                hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"/>
+                                    </UniformGrid>
+                                </Expander.Header>
+
+                               
+
+
+                            </Expander>
+                        </DataTemplate>
+                        
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate >
+                            <StackPanel HorizontalAlignment="Stretch"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+
+                </ItemsControl>
+
+
+                <!--<StackPanel>
+
 
                 <Expander Style="{StaticResource InputElementBaseStyle}" Name="MyExpander" Margin="2" Padding="5,10,0,10">
                     <Expander.Header>
@@ -102,7 +148,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
+                        --><!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />--><!--
 
                         <TextBlock Text="Тип геля" VerticalAlignment="Center"/>
 
@@ -169,7 +215,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
+                        --><!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />--><!--
 
                         <TextBlock Text="Класс отходов" VerticalAlignment="Center"/>
 
@@ -236,7 +282,7 @@
 
                         </Grid.RowDefinitions>
 
-                        <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
+                        --><!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />--><!--
 
 
 
@@ -288,7 +334,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />-->
+                        --><!--<TextBox Style="{StaticResource TextBoxExtend}" hc:InfoElement.Title="This is titile" Width="200" />--><!--
 
 
 
@@ -311,7 +357,7 @@
 
 
 
-            </StackPanel>
+            </StackPanel>-->
 
 
 
@@ -323,14 +369,17 @@
 
         <StackPanel Grid.Row="1">
 
-            <StackPanel Orientation="Horizontal" 
-                        HorizontalAlignment="Right"
-                        Margin="5">
-                <TextBlock Text="Итог: " Style="{StaticResource TextBlockLargeBold}" FontSize="30"/>
-                <TextBlock Text="{Binding TotalSum}" FontSize="30" Style="{StaticResource TextBlockLargeBold}"/>
-                <TextBlock Text=" руб." FontSize="30" Style="{StaticResource TextBlockLargeBold}"/>
+            <Grid HorizontalAlignment="Right" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Итог: " Style="{StaticResource TextBlockLargeBold}" FontSize="30"/>
+                <TextBlock Grid.Column="1" Text="{Binding TotalSum, UpdateSourceTrigger=PropertyChanged}" FontSize="30" Style="{StaticResource TextBlockLargeBold}"/>
+                <TextBlock Grid.Column="2" Text=" руб." FontSize="30" Style="{StaticResource TextBlockLargeBold}"/>
 
-            </StackPanel>
+            </Grid>
 
             <Grid Margin="10">
                 <Grid.RowDefinitions>
@@ -359,7 +408,7 @@
                     hc:BackgroundSwitchElement.MouseHoverBackground="#FFE6A3"
                     hc:BackgroundSwitchElement.MouseDownBackground="#FFD366"
                     Content="Вернуться в меню" 
-                    Style="{StaticResource ButtonCustom}"/>
+                    Style="{StaticResource ButtonCustom}" Click="Button_Click_1"/>
             </Grid>
         </StackPanel>
 
@@ -393,6 +442,8 @@
                         <WrapPanel Margin="10" HorizontalAlignment="Center">
 
                             <Button Height="150" Width="100" 
+                                    Command="{Binding AddProductCommand}"
+                                    CommandParameter="{Binding ElementName=LabelApparat, Path=Text}"
                                     Style="{StaticResource ButtonBaseStyle}"
                                     Margin="5">
                                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -404,7 +455,9 @@
                                     <Image Source="../Images/ultrasound-machine.png"
                                            Width="64" Height="64"/>
 
-                                    <TextBlock 
+                                    <TextBlock
+                                        
+                                        x:Name="LabelApparat"
                                         Grid.Row="1"
                                         Text="Аппараты" 
                                         Foreground="Black"/>
@@ -413,7 +466,9 @@
                             </Button>
 
 
-                            <Button Height="150" Width="100" 
+                            <Button Height="150" Width="100"
+                                    Command="{Binding AddProductCommand}"
+                                    CommandParameter="{Binding ElementName=GlovesLabelApparat, Path=Text}"
                                     Style="{StaticResource ButtonBaseStyle}"
                                     Margin="5">
                                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -426,13 +481,16 @@
                                            Width="64" Height="64"/>
 
                                     <TextBlock 
+                                        Name="GlovesLabelApparat"
                                         Grid.Row="1"
                                         Text="Перчатки" 
                                         Foreground="Black"/>
                                 </Grid>
                             </Button>
 
-                            <Button Height="150" Width="100" 
+                            <Button Height="150" Width="100"
+                                    Command="{Binding AddProductCommand}"
+                                    CommandParameter="{Binding ElementName=GelLabelApparat, Path=Text}"
                                     Style="{StaticResource ButtonBaseStyle}"
                                     Margin="5">
                                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -442,7 +500,8 @@
                                     </Grid.RowDefinitions>
                                     <Image Source="../Images/gel (2).png"
                                            Width="64" Height="64"/>
-                                    <TextBlock 
+                                    <TextBlock
+                                        Name="GelLabelApparat"
                                         Grid.Row="1"
                                         Text="Гель" 
                                         Foreground="Black"/>
@@ -451,6 +510,8 @@
 
                             <Button Height="150" Width="100"
                                     Padding="0"
+                                    Command="{Binding AddProductCommand}"
+                                    CommandParameter="{Binding ElementName=BasketLabelApparat, Path=Text}"
                                     Style="{StaticResource ButtonBaseStyle}"
                                     Margin="5">
                                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -462,7 +523,8 @@
                                     <Image Source="../Images/toxic-waste.png" 
                                            Width="64" Height="64"/>
 
-                                    <TextBlock 
+                                    <TextBlock
+                                        Name="BasketLabelApparat"
                                         Grid.Row="1"
                                         Text="Бак для отходов"
                                         TextWrapping="WrapWithOverflow"
@@ -472,6 +534,8 @@
 
                             <Button Height="150" Width="100"
                                     Padding="0"
+                                    Command="{Binding AddProductCommand}"
+                                    CommandParameter="{Binding ElementName=PhotoLabelApparat, Path=Text}"
                                     Style="{StaticResource ButtonBaseStyle}"
                                     Margin="5">
                                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -481,7 +545,8 @@
                                     </Grid.RowDefinitions>
                                     <Image Source="../Images/duplicate-photo.png" 
                                            Width="64" Height="64"/>
-                                    <TextBlock 
+                                    <TextBlock
+                                        Name="PhotoLabelApparat"
                                         Grid.Row="1"
                                         Text="Фотобумага"
                                         TextWrapping="WrapWithOverflow"
@@ -491,6 +556,8 @@
 
                             <Button Height="150" Width="100"
                                     Padding="0"
+                                    Command="{Binding AddProductCommand}"
+                                    CommandParameter="{Binding ElementName=PresLabelApparat, Path=Text}"
                                     Style="{StaticResource ButtonBaseStyle}"
                                     Margin="5">
                                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -500,7 +567,8 @@
                                     </Grid.RowDefinitions>
                                     <Image Source="../Images/membrane (1).png" 
                                            Width="64" Height="64"/>
-                                    <TextBlock 
+                                    <TextBlock
+                                        Name="PresLabelApparat"
                                         Grid.Row="1"
                                         Text="Презервативы"
                                         TextWrapping="WrapWithOverflow"
@@ -524,4 +592,4 @@
     </Grid>
 
 
-</Window>
+</Page>

@@ -18,20 +18,21 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="310"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="61*"/>
+            <ColumnDefinition Width="429*"/>
             <ColumnDefinition Width="0"/>
         </Grid.ColumnDefinitions>
 
         <hc:ScrollViewer>
 
-          
+
             <hc:ScrollViewer.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#7FC51FBD" Offset="0.92"/>
                     <GradientStop Color="#7FD6B6F1" Offset="0"/>
                 </LinearGradientBrush>
             </hc:ScrollViewer.Background>
-            
+
             <StackPanel Margin="8">
                 <Button
                     Height="30" Padding="10,0"
@@ -42,7 +43,7 @@
                     hc:BackgroundSwitchElement.MouseDownBackground="#FFD366"
                     Content="Вернуться в меню" 
                     Style="{StaticResource ButtonCustom}" Click="Button_Click"/>
-                    
+
                 <Expander 
                     
                     Style="{StaticResource InputElementBaseStyle}"
@@ -76,8 +77,8 @@
                     Style="{StaticResource InputElementBaseStyle}"
                     Header="Конструкция аппарата"
                     Margin="0,2,0,0">
-                   
-                        <!--<hc:ButtonGroup 
+
+                    <!--<hc:ButtonGroup 
                             Margin="4"
                             Style="{StaticResource ButtonGroupBaseStyle}"
                     
@@ -86,16 +87,16 @@
                             <RadioButton  Content="Стационарный" />
                         </hc:ButtonGroup>-->
 
-                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
-  
-                            <ToggleButton Content="{Binding Constructions[0].Key}" 
+                    <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+
+                        <ToggleButton Content="{Binding Constructions[0].Key}" 
                                          IsChecked="{Binding Constructions[0].Value, 
                                          Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <ToggleButton Content="{Binding Constructions[1].Key}" 
                                      IsChecked="{Binding Constructions[1].Value, Mode=TwoWay}"/>
-                        </hc:ButtonGroup>
+                    </hc:ButtonGroup>
 
-                    
+
                 </Expander>
 
                 <Expander 
@@ -182,8 +183,8 @@
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
-                                
-                                
+
+
                             </TextBox>
 
                         </StackPanel>
@@ -194,12 +195,12 @@
                           Style="{StaticResource InputElementBaseStyle}"
                           Margin="0,2,0,0">
                     <StackPanel>
-                    <local:SearchAndCheckboxControl
+                        <local:SearchAndCheckboxControl
                         
                         Width="268"
                         SearchData="{Binding SensorsData, UpdateSourceTrigger=PropertyChanged}"
                         SearchTooltipText="Поиск по датчикам"/>
-                   
+
                     </StackPanel>
 
 
@@ -230,8 +231,8 @@
                                 <StackPanel HorizontalAlignment="Left"  Width="250"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                  
+                    </ItemsControl>
+
                 </Expander>
 
                 <Expander Header="Инструкция на русском"
@@ -269,19 +270,19 @@
            
         </DataGrid>-->
 
-        <Grid  Grid.Column="1" Margin="5">
+        <Grid  Grid.Column="1" Margin="5,5,5,5" Grid.ColumnSpan="2">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="3">
-            <TextBlock Text="По вашему запросу найдено "/>
-                <TextBlock Text="{Binding TestData.Count}"/>
-                <TextBlock Text=" аппаратов"/>
+                <TextBlock Text="По вашему запросу найдено " Style="{StaticResource TextBlockDefaultBold}"/>
+                <TextBlock Text="{Binding TestData.Count}" Style="{StaticResource TextBlockDefaultBold}"/>
+                <TextBlock Text=" аппаратов" Style="{StaticResource TextBlockDefaultBold}"/>
             </StackPanel>
-           
+
             <DataGrid Grid.Row="1" IsReadOnly="True" 
                   AutoGenerateColumns="True" 
                   ItemsSource="{Binding TestData, UpdateSourceTrigger=PropertyChanged}"
