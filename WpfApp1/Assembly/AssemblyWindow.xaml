@@ -394,7 +394,7 @@
                 <Button Content="Добавить предмет" Command="{Binding ShowCommand}" CommandParameter="{Binding ElementName=ChoiceBorder}" VerticalAlignment="Bottom" Click="Button_Click"/>
                 <Button 
                    
-                    
+                    Command="{Binding CreateDocumentCommand}"              
                     Grid.Column="1"
                     Content="Оформить коммерческое предложение"/>
                 <Button

@@ -6,7 +6,12 @@
              xmlns:local="clr-namespace:WpfApp1"
              mc:Ignorable="d"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="50" d:DesignWidth="850">
+
+    <UserControl.DataContext>
+        <local:GlovesModel/>
+    </UserControl.DataContext>
+    
     <Grid MinWidth="420">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -27,11 +32,9 @@
 
         <TextBlock Text="Материал" VerticalAlignment="Center" Grid.Row="1" Margin="0,5,0,0" />
 
-        <ComboBox  Grid.Row="1" Grid.Column="2" Margin="0,5,0,0">
-            <ComboBoxItem Content="Латекс" IsSelected="True"/>
-            <ComboBoxItem Content="Винил" />
-            <ComboBoxItem Content="Хирургические" />
-        </ComboBox>
+        <ComboBox  Grid.Row="1" Grid.Column="2" Margin="0,5,0,0" 
+                   ItemsSource="{Binding Materials}"
+                   SelectedIndex="{Binding SelectedMaterialIndex}"/>
 
 
     </Grid>

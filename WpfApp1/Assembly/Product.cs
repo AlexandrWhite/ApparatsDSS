@@ -10,9 +10,9 @@ namespace WpfApp1.Assembly
 {
     class Product:INotifyPropertyChanged
     {
-        string name;
+        protected string name;
         int count = 1;
-        int price_unit;
+        protected int price_unit;
 
         UserControl view;
 
@@ -29,7 +29,7 @@ namespace WpfApp1.Assembly
             
         }
 
-        public string Name
+        public virtual string Name
         {
             get { return name; }
         }
@@ -40,9 +40,10 @@ namespace WpfApp1.Assembly
             get { return count; }
         }
 
-        public int PriceUnit
+        public virtual int PriceUnit
         {
             get { return price_unit; }
+            
         }
 
         public UserControl View 

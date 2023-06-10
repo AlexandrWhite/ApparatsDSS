@@ -1,8 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +23,7 @@ namespace WpfApp1
         public RelayCommand<UIElement> HideCommand { get; private set; }
         public RelayCommand<string> AddProductCommand { get; private set; }
         public RelayCommand<Product> RemoveProductCommand { get; private set; }
+        public RelayCommand CreateDocumentCommand { get; private set; }
 
 
         Random r = new Random();
@@ -58,6 +61,25 @@ namespace WpfApp1
                 OnPropertyChanged(nameof(TotalSum));
             });
 
+            CreateDocumentCommand = new RelayCommand(() =>
+            {
+                Console.WriteLine("I will save your file");
+                Stream myStream;
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+                saveFileDialog1.Filter = "Документ Word (*.docx) |*.docx|All files (*.*)|*.*";
+                saveFileDialog1.FilterIndex = 1;
+                saveFileDialog1.RestoreDirectory = true;
+
+                if (saveFileDialog1.ShowDialog() == true)
+                {
+                    myStream = saveFileDialog1.OpenFile();
+                    myStream.Close();
+                    Console.WriteLine($"I will write {saveFileDialog1.FileName}");                   
+                }
+                ProductDocumentWord pd = new ProductDocumentWord(saveFileDialog1.FileName);
+                pd.Process(products);
+            });
 
         }
 
@@ -69,12 +91,12 @@ namespace WpfApp1
             switch (name)
             {
                 case "Гель":
-                    p = new GelModel(name, r.Next(1000, 100000));
+                    p = new GelModel();
                     p.View = new GelView();
                     break;
 
                 case "Перчатки":
-                    p = new GlovesModel(name, r.Next(1000, 100000));
+                    p = new GlovesModel();
                     p.View = new GlovesView();
                     break;
 
@@ -84,24 +106,25 @@ namespace WpfApp1
                     break;
 
                 case "Фотобумага":
-                    p = new PhotoModel(name, r.Next(1000, 100000));
+                    p = new PhotoModel();
                     p.View = new PhotoView();
                     break;
 
                 default:
-                    p = new Product(name, r.Next(1000, 100000));
-                    p.PropertyChanged += Product_PropertyChanged;
+                    p = new Product("Презервативы (1 пачка 100 шт.)",780);
+                    //p.PropertyChanged += Product_PropertyChanged;
                     break;
                 
             }
             products.Add(p);
-            
+            p.PropertyChanged += Product_PropertyChanged;
             OnPropertyChanged(nameof(Products));
             OnPropertyChanged(nameof(TotalSum));
         }
 
         private void Product_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+           
 
             if (e.PropertyName == "TotalPrice")
             {

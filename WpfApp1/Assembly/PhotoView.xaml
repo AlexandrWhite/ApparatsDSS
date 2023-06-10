@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
+    <UserControl.DataContext>
+        <local:PhotoModel/>
+    </UserControl.DataContext>
+    
     <Grid MinWidth="420">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -20,13 +24,13 @@
 
 
 
-        <TextBlock Text="Модель принтера" VerticalAlignment="Center" Grid.Row="2" Margin="0,5,0,0" />
+        <TextBlock Text="Название принтера" VerticalAlignment="Center" Grid.Row="2" Margin="0,5,0,0" />
 
-        <ComboBox  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0">
-            <ComboBoxItem Content="Sony UPP-110S" IsSelected="True"/>
-            <ComboBoxItem Content="Sony UPP-110HD" />
-            <ComboBoxItem Content="25" />
-        </ComboBox>
+        <ComboBox  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0" 
+                   ItemsSource="{Binding PhotoPapperNames}"
+                   SelectedValue="{Binding SelectedPhotoPapperName}"/>
+
+
 
 
     </Grid>

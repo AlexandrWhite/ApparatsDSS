@@ -28,28 +28,30 @@
 
         
         <TextBlock Text="Тип геля" VerticalAlignment="Center" Grid.Row="1"/>
-
+      
         <hc:ButtonGroup  Grid.Column="1" Grid.Row="1">
-            <RadioButton Content="Бесцветный" IsChecked="True"/>
-            <RadioButton Content="Цветной"/>
-            <RadioButton Content="Стерильный"/>
+            <RadioButton Content="{Binding Colors[0].Key}" IsChecked="{Binding Colors[0].Value}"/>
+            <RadioButton Content="{Binding Colors[1].Key}" IsChecked="{Binding Colors[1].Value}"/>
+            <RadioButton Content="{Binding Colors[2].Key}" IsChecked="{Binding Colors[2].Value}"/>
         </hc:ButtonGroup>
+
+
+
+
 
         <TextBlock Text="Плотность геля" VerticalAlignment="Center" Grid.Row="2" />
+        <hc:ButtonGroup/>
 
-        <hc:ButtonGroup  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0">
-            <RadioButton Content="Высокая" IsChecked="True"/>
-            <RadioButton Content="Средняя"/>
-        </hc:ButtonGroup>
+        <ComboBox  Grid.Row="2" Grid.Column="2" Margin="0,5,0,0"
+                   SelectedItem="{Binding SelectedDensity}"
+                   ItemsSource="{Binding AvialableDensity}"/>
 
 
-        <TextBlock Text="Плотность геля" VerticalAlignment="Center" Grid.Row="3" Margin="0,5,0,0" />
+        <TextBlock Text="Количество (кг)" VerticalAlignment="Center" Grid.Row="3" Margin="0,5,0,0" />
 
-        <ComboBox  Grid.Row="3" Grid.Column="2" Margin="0,5,0,0">
-            <ComboBoxItem Content="0.25" IsSelected="True"/>
-            <ComboBoxItem Content="1" />
-            <ComboBoxItem Content="5" />
-        </ComboBox>
+        <ComboBox  Grid.Row="3" Grid.Column="2" Margin="0,5,0,0" 
+                   SelectedItem="{Binding SelectedVolume}"
+                   ItemsSource="{Binding AvialableVolume}"/>
 
 
     </Grid>
